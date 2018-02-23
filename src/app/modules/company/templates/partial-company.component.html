@@ -1,0 +1,399 @@
+<div class="box-body">
+    <form ngForm="appPartialCompany" #appPartialCompany="ngForm">
+        <span class="pull-right" *ngIf="isAdded">
+           Testing Mode: <input type="checkbox" [checked]= "company.checkboxFalse" (change)="testingModeON($event)">
+        </span>
+        <mat-tab-group mat-tab-body-content [disableRipple]=true (selectedTabChange)="onLinkClick($event)" [(selectedIndex)]="company.currentTabIndex" >
+            <i class="fa fa-info-circle"></i>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon>
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    </mat-icon> {{"Info"|translate}}
+                </ng-template>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group ">
+                            <label for="Company_Name">{{"Company Name"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <p class="text-red" *ngIf="Company_Name.invalid && (Company_Name.dirty || Company_Name.touched || errors.Company_Name)">
+                                {{"Please Enter Company Name"|translate}}
+                            </p> -->
+                            <input type="text" name="Company_Name" #Company_Name="ngModel" [(ngModel)]="company.Company_Name" class="form-control" placeholder="Enter Company Name"
+                                required/>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{"Company Type"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <p class="text-red" *ngIf="company.Company_Type==0 && errors.Company_Type">
+                                    {{"Please Select Company Type"|translate}}
+                            </p> -->
+                            <select class="form-control" name="Company_Type" #Company_Type="ngModel" [(ngModel)]="company.Company_Type" required>
+                                <option value="undefined" [disabled]="true">Select Type</option>
+                                <option *ngFor="let type of companyTypes" value="{{type.id}}">{{type.value}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div *ngIf="isAdded" class="col-md-6">
+                        <div class="form-group ">
+                            <label for="txtClinicName" data-toggle="collapse" data-target="#collapse1">{{"Company Admin Email"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <p *ngIf="Company_Admin_Email.invalid && (Company_Admin_Email.dirty || Company_Admin_Email.touched || errors.Company_Admin_Email)">
+                                <span *ngIf="Company_Admin_Email.errors.email" class="text-red">
+                                    {{"example@mail.com"|translate}}
+                                </span>
+                            </p> -->
+                            <input type="email" name="Company_Admin_Email" #Company_Admin_Email="ngModel" [(ngModel)]="company.Company_Admin_Email" class="form-control"
+                                placeholder="Enter Company Admin Email" email required/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{"Max Allowed Branches"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <p *ngIf="Max_Allowed_Branches.invalid && (Max_Allowed_Branches.dirty || Max_Allowed_Branches.touched || errors.Max_Allowed_Branches)" class="text-red">
+                                <span *ngIf="Max_Allowed_Branches.errors.required || errors.Max_Allowed_Branches">
+                                    {{"Please Enter Max Allowed Branches"|translate}}
+                                </span>
+                            </p> -->
+                            <input type="number" name="Max_Allowed_Branches" #Max_Allowed_Branches="ngModel" min="1" [(ngModel)]="company.Max_Allowed_Branches"
+                                class="form-control" placeholder="Enter Max Allowed Branches" required/>
+                        </div>
+                    </div>
+
+                    <div *ngIf="isAdded" class="col-md-6">
+                        <div class="form-group ">
+                            <label>{{"Company Admin Password"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <p *ngIf="Admin_Password.invalid && (Admin_Password.dirty || Admin_Password.touched || errors.Admin_Password)">
+                                <span *ngIf="Admin_Password.errors?.required" class="text-red">
+                                    {{"Enter Admin Password"|translate}}
+                                </span>
+                            </p> -->
+                            <input type="password" (keypress)="confirmPassword()" name="Admin_Password" #Admin_Password="ngModel" [(ngModel)]="company.Admin_Password" class="form-control"
+                                placeholder="Enter Password" required/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{"Subscription Type"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <p *ngIf="(company.SubscriptionID==0 && errors.SubscriptionID)">
+                                <span class="text-red">
+                                    {{"Select Subscription Type"|translate}}
+                                </span>
+                            </p> -->
+                            <select name="SubscriptionID" #SubscriptionID  [(ngModel)]="company.SubscriptionID" class="form-control" required>
+                                <option value="undefined" [disabled]="true">Select Subscription Type</option>
+                                <option *ngFor="let type of subscriptionTypes" value="{{type.id}}">{{type.value}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div *ngIf="isAdded" class="col-md-6">
+                        <div class="form-group">
+                            <label id="lb" for="URL">{{"Confirm Password"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <span [hidden]="isMatch" class="text-red">
+                                {{"Password Not Match"|translate}}
+                            </span>
+                            <input (keyup)="confirmPass()" type="password" name="confirmPassword" #confirmPassword="ngModel" [(ngModel)]="company.confirmPassword" class="form-control"
+                                placeholder="Re-Enter Password" required/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{"Software Modules Subscribed"|translate}}</label>
+                            <input type="number" name="Software_Modules_Subscribed" #Software_Modules_Subscribed="ngModel" min="0" [(ngModel)]="company.Software_Services_Level"
+                                class="form-control" placeholder="Enter Software Modules Subscribed"/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{"Status"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <select class="form-control" name="Status" #Status [(ngModel)]="company.Status" required>
+                                    <option value="undefined" [disabled]="true">Select Status</option>
+                                    <option *ngFor="let status of statuses" value="{{status.id}}">{{status.value}}</option>
+                                </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="txtStreet">{{"City"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <p *ngIf="City.invalid && (City.dirty || City.touched || errors.City)" class="text-red">
+                                <span *ngIf="City.errors.required">{{"Please Enter City"|translate}}</span>
+                            </p> -->
+                            <input type="text" name="City" #City="ngModel" [(ngModel)]="company.City" class="form-control" placeholder="Enter City" required/>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{"Company Website"|translate}}</label>
+                            <!-- <p *ngIf="Company_Website.invalid && (Company_Website.dirty || Company_Website.touched)" class="text-red">
+                                <span *ngIf="Company_Website.errors?.url">{{"http://www.example.com"|translate}}</span>
+                            </p> -->
+                            <input type="text" name="Company_Website" #Company_Website="ngModel" [(ngModel)]="company.Company_Website" class="form-control"
+                                placeholder="http://www.example.com" url/>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group ">
+                            <label>{{"Panel URL"|translate}}</label>
+                                <!-- <p *ngIf="URL.errors?.url" class="text-red">
+                                    {{"http://www.example.com"|translate}}
+                                </p> -->
+                            <input type="text" name="URL" #URL="ngModel" [(ngModel)]="company.URL" class="form-control" placeholder="http://www.example.com"
+                                url/>
+                        </div>
+                    </div>
+                
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{"Logo"|translate}}</label>
+                            <p *ngIf="company.Logo != ''">
+                                <img width="100" src="http://backoffice.istanbul/api/public{{company.Logo}}" alt="Logo">      
+                            </p>
+                            
+                            <input type="file" name="fileUpload" [(ngModel)]="company.Logo" (change)="handleFileSelect($event)" class="form-control" />
+                        </div>
+                    </div>
+                    <div *ngIf="isAdded" class="col-md-6">
+                        <div class="form-group ">
+                            <label for="txtClinicName" data-toggle="collapse" data-target="#collapse1">{{"Default Branch Admin Email"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <input type="email" name="Branch_Admin_Email" #Branch_Admin_Email="ngModel" [(ngModel)]="company.Branch_Admin_Email" class="form-control"
+                                placeholder="Enter Branch Admin Email" email required/>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            
+            <mat-tab >
+                <ng-template mat-tab-label>
+                        <mat-icon>
+                            <i class="fa fa-address-card-o"> </i>
+                        </mat-icon> {{"Address"|translate}}
+                </ng-template>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{"Social Media ID"|translate}}</label>
+                                <form (submit)="addTodo($event)">
+                                    <div class="input-group">
+                                        <input [(ngModel)]="newTodo" (keyup.enter)="newTodo=''" class="form-control" name="newTodo">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-secondary todo-button" type="submit" [disabled]="newTodo===''"><i class="fa fa-plus"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </form>
+
+                                <ul *ngIf="this.todos.length != 0" class="todo-list">
+                                    <li *ngFor="let todo of todos; let i=index">
+                                        <!-- <input type="checkbox" class="checkbox" [(ngModel)]="todo.completed" /> -->
+                                        <span [ngClass]="{'checked': todo.completed}">{{ todo.newTodo }}
+                                            <span (click)="deleteTodo(i)" class="delete-icon"><i class="fa fa-close remove-todo"></i>
+                                            </span>
+                                        </span>
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="txtStreet">{{"Country"|translate}}</label>
+                                <span class="text-red">
+                                    <b> *</b>
+                                </span>
+                                <!-- <p *ngIf="Country.invalid && (Country.dirty || Country.touched || errors.Country)" class="text-red">
+                                    <span *ngIf="Country.errors.required">{{"Please Enter Country"|translate}}</span>
+                                </p> -->
+                                <select name="Country" #Country="ngModel" [(ngModel)]="company.Country" class="form-control" required>
+                                    <option value="" [disabled]="true">Select Country</option>
+                                    <option *ngFor="let country of countryList" value="{{country.code}}">{{country.name}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtStreet">{{"Town"|translate}}</label>
+                                <span class="text-red">
+                                    <b> *</b>
+                                </span>
+                                <!-- <p *ngIf="Town.invalid && (Town.dirty || Town.touched || errors.Town)" class="text-red">
+                                    <span *ngIf="Town.errors.required">{{"Please Enter Town"|translate}}</span>
+                                </p> -->
+                                <input type="text" name="Town" #Town="ngModel" [(ngModel)]="company.Town" class="form-control" placeholder="Enter Town" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtStreet">{{"Street"|translate}}</label>
+                                <span class="text-red">
+                                    <b> *</b>
+                                </span>
+                                <!-- <p *ngIf="Street.invalid && (Street.dirty || Street.touched || errors.Street)" class="text-red">
+                                    <span *ngIf="Street.errors.required">{{"Please Enter Street No"|translate}}</span>
+                                </p> -->
+                                <input type="text" name="Street" #Street="ngModel" [(ngModel)]="company.Street" class="form-control" placeholder="Enter Street"
+                                    required/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="txtStreet">{{"Location on Map"|translate}}</label>
+                                <span class="text-red">
+                                    <b> *</b>
+                                </span>
+                                <!-- <p *ngIf="Location.invalid && (Location.dirty || Location.touched || errors.Location)" class="text-red">
+                                    <span *ngIf="Location.errors.required">{{"Please Choose Location"|translate}}</span>
+                                </p> -->
+                                <input (focus)="mapModal.show()" type="text" name="Location" #Location="ngModel" [(ngModel)]="company.Location" class="form-control"
+                                    placeholder="Enter latitude" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtStreet">{{"Enter Building No"|translate}}</label>
+                                <span class="text-red">
+                                    <b> *</b>
+                                </span>
+                                <!-- <p *ngIf="Building_No.invalid && (Building_No.dirty || Building_No.touched || errors.Building_No)" class="text-red">
+                                    <span *ngIf="(Building_No.errors.required || errors.Building_No)">{{"Please Enter Building No"|translate}}</span>
+                                </p> -->
+                                <input type="number" name="Building_No" #Building_No="ngModel" min="1" [(ngModel)]="company.Building_No" class="form-control"
+                                    placeholder="Enter Building No" required/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtStreet">{{"Address"|translate}}</label>
+                                <textarea name="Address" #Address="ngModel" [(ngModel)]="company.Address" class="form-control" placeholder="Address"> </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon>
+                        <i class="fa fa-address-book-o" aria-hidden="true"></i>
+                    </mat-icon> {{"Contact"|translate}}
+                </ng-template>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="txtStreet">{{"Contact Person"|translate}}</label>
+                                <span class="text-red">
+                                    <b> *</b>
+                                </span>
+                                <!-- <p *ngIf="Contact_Person.invalid && (Contact_Person.dirty || Contact_Person.touched || errors.Contact_Person)" class="text-red">
+                                    <span *ngIf="Contact_Person.errors.required">{{"Please Enter Contact Person"|translate}}</span>
+                                </p> -->
+                                <input type="text" name="Contact_Person" #Contact_Person="ngModel" [(ngModel)]="company.Contact_Person" class="form-control"
+                                    placeholder="Enter Contact Person" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtStreet">{{"Landline No"|translate}}</label>
+                                <span class="text-red">
+                                    <b> *</b>
+                                </span>
+                                <!-- <p class="text-red">
+                                    <span *ngIf="(this.company.Landline_No==='' && errors.Landline_No)">
+                                        {{"Please Enter Landline No"|translate}}
+                                    </span>
+                                    <span *ngIf="Landline_No.errors?.phone"> (xxx-xxxxxxx)</span>
+                                </p> -->
+                                <input type="text" name="Landline_No" #Landline_No="ngModel" [(ngModel)]="company.Landline_No" class="form-control" placeholder="Enter Landline No"
+                                    phone="TR" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtStreet">{{"Mobile No"|translate}}</label>
+                                <span class="text-red">
+                                    <b> *</b>
+                                </span>
+                                <!-- <p class="text-red">
+                                    <span *ngIf="(this.company.Mobile_No==='' && errors.Mobile_No)">
+                                        {{"Please Enter Mobile No"|translate}}
+                                    </span>
+                                    <span *ngIf="Mobile_No.errors?.phone"> (xxxx-xxxxxxx)</span>
+                                </p> -->
+                                <input type="text" name="Mobile_No" #Mobile_No="ngModel" [(ngModel)]="company.Mobile_No" class="form-control" placeholder="Enter Mobile No"
+                                    phone="TR" required/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="txtStreet">{{"Contact Person Email"|translate}}</label>
+                                <span class="text-red">
+                                    <b> *</b>
+                                </span>
+                                <!-- <p class="text-red" *ngIf="Contact_Person_Email.invalid && (Contact_Person_Email.dirty || Contact_Person_Email.touched || errors.Contact_Person_Email)">
+                                    <span *ngIf="Contact_Person_Email.errors?.email">{{"example@mail.com"|translate}}</span>
+
+                                </p> -->
+                                <input type="email" required name="Contact_Person_Email" #Contact_Person_Email="ngModel" [(ngModel)]="company.Contact_Person_Email" class="form-control" placeholder="Enter Email"
+                                    email/>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtStreet">{{"Contact Number"|translate}}</label>
+                                <!-- <p *ngIf="ContactNumber.invalid && (ContactNumber.dirty || ContactNumber.touched)" class="text-red">
+                                    <span *ngIf="ContactNumber.errors?.phone">{{"Please Enter Contact No (xxx-xxxxxxx)"|translate}}</span>
+                                </p> -->
+                                <input type="text" name="ContactNumber" #ContactNumber="ngModel" [(ngModel)]="company.ContactNumber" class="form-control"
+                                    placeholder="Contact No." phone="TR" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+        <!-- <input type="submit" class="btn btn-info pull-right" *ngIf="currentTabIndex != 2" (click)="onLinkClick()" value="Next"> -->
+    </form>
+</div>
+
+<app-modal #mapModal class="modal-map">
+    <div class="app-modal-header">
+        {{"Select Location"|translate}}
+    </div>
+    <div class="app-modal-body">
+        <ngui-map zoom="6" center="39.925533, 32.866287" (mapClick)="onMapClick($event)">
+            <marker position="Kayseri, Turkey"></marker>
+        </ngui-map>
+    </div>
+    <div class="app-modal-footer">
+        <button type="button" class="btn btn-primary" (click)="mapModal.hide();setMapLngLat()">{{"Save"|translate}}</button>
+        <button type="button" class="btn btn-primary" (click)="mapModal.hide()">{{"Cancel"|translate}}</button>
+    </div>
+</app-modal>

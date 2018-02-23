@@ -1,0 +1,469 @@
+<div class="box-body">
+    <form ngForm="appPartialForm" #appPartialForm="ngForm">
+        <mat-tab-group [disableRipple]=true (selectedTabChange)="onLinkClick($event)" [(selectedIndex)]="branch.newTabIndex">
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon>
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    </mat-icon> {{"Info"|translate}}
+                </ng-template>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{"Branch Name"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <span class="text-red" *ngIf="Name.invalid && ( Name.dirty || Name.touched || errors.Branch_Name ) ">
+                                {{"Please Enter Branch Name"|translate}}
+                            </span> -->
+                            <input type="text" name="Name" #Name="ngModel" [(ngModel)]="branch.Name" class="form-control" placeholder="Enter Branch Name"
+                                required/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{"Branch Type"|translate}}</label>
+                            <!-- <select  class="form-control" id="ddlSubscription"  [(ngModel)]="branch.Companyid" > -->
+                            <select name="Branch_Type" class="form-control" [(ngModel)]="branch.Branch_Type">
+                                <option value="" [disabled]="true">Select Type</option>
+                                <option value="1">Type 1</option>
+                                <option value="2">Type 2</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div *ngIf="isAdded" class="col-md-6">
+                        <div class="form-group ">
+                            <label for="txtClinicName" data-toggle="collapse" data-target="#collapse1">{{"Branch Admin Email"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <span class="text-red" *ngIf="branch_Admin_Email.invalid && ( branch_Admin_Email.dirty || branch_Admin_Email.touched || errors.branch_Admin_Email) ">
+                                {{"example@mail.com"|translate}}
+                            </span> -->
+                            <input type="email" required name="branch_Admin_Email" #branch_Admin_Email="ngModel" [(ngModel)]="branch.branch_Admin_Email" class="form-control"
+                                placeholder="Enter Branch Admin Email" email/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{"Status"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <span *ngIf="(branch.Status == 0 && errors.Status)">
+                                <span class="text-red">
+                                    {{"Please Select Status "|translate}}
+                                </span>
+                            </span> -->
+                            <select class="form-control" name="Status" #Status="ngModel" [(ngModel)]="branch.Status" required>
+                                <option value="undefined" [disabled]="true">Select Status</option>
+                                <option *ngFor="let status of statuses" value="{{status.id}}">{{status.value}}</option>
+                            </select>
+                            <!-- <input type="number" min="1" [(ngModel)]="company.Status" class="form-control" placeholder="Enter Status" required/> -->
+                        </div>
+                    </div>
+
+                    <div *ngIf="isAdded" class="col-md-6">
+                        <div class="form-group ">
+                            <label id="lb" for="URL">{{"Branch Admin Password"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <span class="text-red" *ngIf="Admin_Password.invalid && ( Admin_Password.dirty || Admin_Password.touched || errors.Admin_Password ) ">
+                                {{"Enter Admin Password"|translate}}
+                            </span> -->
+                            <input type="password" name="Admin_Password" #Admin_Password="ngModel" [(ngModel)]="branch.Admin_Password" class="form-control"
+                                placeholder="Enter Password" required/>
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="isAdded" class="col-md-6">
+                        <div class="form-group ">
+                            <label>{{"Confirm Password"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <span [hidden]="isMatch" class="text-red left-pad">
+                                {{"Password Not Match"|translate}}
+                            </span>
+                            <input (keyup)="confirmPass()" type="password" name="confirmPassword" #confirmPassword="ngModel" [(ngModel)]="branch.confirmPassword"
+                                class="form-control" placeholder="Re-Enter Password" required/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{"Capabilities"|translate}}</label>
+                            <select class="form-control" name="capabilities" [(ngModel)]="branch.Capabilities">
+                                <option value="" [disabled]="true">Select Capability</option>
+                                <option value="capability-1">capability 1</option>
+                                <option value="capability-2">capability 2</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{"Social Media ID"|translate}}</label>
+                            <form (submit)="addTodo($event)">
+                                <div class="input-group">
+                                    <input [(ngModel)]="newTodo" (keyup.enter)="newTodo=''" class="form-control" name="newTodo">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-secondary todo-button" type="submit" [disabled]="newTodo===''">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </form>
+                            <ul *ngIf="this.todos.length != 0" class="todo-list">
+                                <li *ngFor="let todo of todos; let i=index">
+                                    <!-- <input type="checkbox" class="checkbox" [(ngModel)]="todo.completed" /> -->
+                                    <span [ngClass]="{'checked': todo.completed}">{{ todo.newTodo }}
+                                        <span (click)="deleteTodo(i)" class="delete-icon">
+                                            <i class="fa fa-close remove-todo"></i>
+                                        </span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{"Branch DataAccess Permission"|translate}}</label>
+                            <!-- <span class="text-red" *ngIf="Branch_Data_Access_Permissions.invalid && (Branch_Data_Access_Permissions.dirty || Branch_Data_Access_Permissions.touched)">
+
+                                <span *ngIf="Branch_Data_Access_Permissions.errors.required">{{"Please Enter Permission"|translate}}</span>
+
+                            </span> -->
+                            <input type="text" name="Branch_Data_Access_Permissions" #Branch_Data_Access_Permissions="ngModel" [(ngModel)]="branch.Branch_Data_Access_Permissions"
+                                class="form-control" placeholder="Enter Permission"/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{"Branch DataSharing Permission"|translate}}</label>
+
+                            <!-- <span class="left-pad text-red" *ngIf="Branch_Data_Sharing_Permissions.invalid && (Branch_Data_Sharing_Permissions.dirty || Branch_Data_Sharing_Permissions.touched)">
+
+                                <span *ngIf="Branch_Data_Sharing_Permissions.errors.required">{{"Please Enter Branch DataSharing Permission"|translate}}</span>
+
+                            </span> -->
+                            <input type="text" name="Branch_Data_Sharing_Permissions" #Branch_Data_Sharing_Permissions="ngModel" [(ngModel)]="branch.Branch_Data_Sharing_Permissions"
+                                class="form-control" placeholder="Enter Sharing Permission"/>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon>
+                        <i class="fa fa-address-card-o"> </i>
+                    </mat-icon> {{"Address"|translate}}
+                </ng-template>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="numb">{{"Branch Website"|translate}}</label>
+                        <span class="text-red" *ngIf="Branch_Website.invalid && (Branch_Website.dirty || Branch_Website.touched)">
+                            <span *ngIf="Branch_Website.errors?.url">{{"http://www.example.com"|translate}}</span>
+                        </span>
+                        <input type="text" name="Branch_Website" #Branch_Website="ngModel" [(ngModel)]="branch.Branch_Website" class="form-control"
+                            placeholder="Enter Website URL" url/>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="txtStreet">{{"Country"|translate}}</label>
+                        <span class="text-red">
+                            <b> *</b>
+                        </span>
+                        <!-- <span *ngIf="Country.invalid && (Country.dirty || Country.touched || errors.Country)" class="text-red">
+                            {{"Please Enter Country"|translate}}
+                        </span> -->
+                        <select name="Country" #Country="ngModel" [(ngModel)]="branch.Country" class="form-control" required>
+                            <option value="" selected>Select Country</option>
+                            <option *ngFor="let country of countryList" value="{{country}}">{{country}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="txtStreet">{{"City"|translate}}</label>
+                        <span class="text-red">
+                            <b> *</b>
+                        </span>
+                        <!-- <span class="text-red" *ngIf="City.invalid && ( City.dirty || City.touched || errors.City)">
+                                                {{"Please Enter City"|translate}}
+                                            </span> -->
+                        <!-- <input type="text" name="City" #City="ngModel" [(ngModel)]="branch.City" class="form-control" placeholder="Enter City" required/> -->
+                        <select [disabled]="isCountrySelected" name="City" #City="ngModel" [(ngModel)]="branch.City"  class="form-control" required>
+                            <option value="" selected>Select City</option>
+                            <option *ngFor="let city of cityList" value="{{city}}">{{city}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="txtStreet">{{"Building No"|translate}}</label>
+                        <span class="text-red">
+                            <b> *</b>
+                        </span>
+                        <!-- <span *ngIf="Building_No.invalid && (Building_No.dirty || Building_No.touched || errors.Building_No)" class="text-red">
+                            {{"Please nter Building No"|translate}}
+                        </span> -->
+                        <input type="number" name="Building_No" #Building_No="ngModel" min="1" [(ngModel)]="branch.Building_No" class="form-control"
+                            placeholder="Enter Building No" required/>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="txtStreet">{{"Street"|translate}}</label>
+                        <!-- <span class="text-red" *ngIf="Street.invalid && (Street.dirty || Street.touched)">
+                            <span *ngIf="Street.errors.required">{{"Please Enter Street"|translate}}</span>
+                        </span> -->
+                        <input type="number" name="Street" #Street="ngModel" [(ngModel)]="branch.Street" class="form-control" placeholder="Enter Street"/>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="txtStreet">{{"Town"|translate}}</label>
+                        <!-- <span class="text-red" *ngIf="Town.invalid && (Town.dirty || Town.touched)">
+                            <span *ngIf="Town.errors.required">{{"Please Enter Town"|translate}}</span>
+                        </span> -->
+                        <input type="text" name="Town" #Town="ngModel" [(ngModel)]="branch.Town" class="form-control" placeholder="Enter Town"/>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="txtStreet">{{"Location On Map"|translate}}</label>
+                        <span class="text-red">
+                            <b> *</b>
+                        </span>
+                        <!-- <span class="text-red" *ngIf="Location.invalid && (Location.dirty || Location.touched || errors.Location)">
+                            {{"Please Enter Location"|translate}}
+                        </span> -->
+                        <input (focus)="mapModal.show()" type="text" name="Location" #Location="ngModel" [(ngModel)]="branch.Location" class="form-control"
+                            placeholder="Enter Location" required/>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <mat-tab >
+                <ng-template mat-tab-label>
+                    <mat-icon>
+                        <i class="fa fa-address-book-o" aria-hidden="true"></i>
+                    </mat-icon> {{"Contact"|translate}}
+                </ng-template>
+
+                <div class="row">
+                    <div class="form-group">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="txtStreet">{{"Contact Person"|translate}}</label>
+
+                                <span class="text-red">
+                                    <b> *</b>
+                                </span>
+                                <!-- <span class="text-red" *ngIf="Contact_Person.invalid && (Contact_Person.dirty || Contact_Person.touched || errors.contact_Person )">
+                                    {{"Please Enter Contact Person"|translate}}
+                                </span> -->
+                                <input type="text" name="Contact_Person" #Contact_Person="ngModel" [(ngModel)]="branch.Contact_Person" class="form-control"
+                                    placeholder="Enter Contact Person" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtStreet">{{"Landline No"|translate}}</label>
+                                <!-- <span class="left-pad" *ngIf="Landline_Number.invalid && (Landline_Number.dirty || Landline_Number.touched)">
+
+                                    <span *ngIf="Landline_Number.errors?.phone">{{"Enter Landline (xxx-xxxxxxx)"|translate}}</span>
+
+                                </span> -->
+                                <input type="text" name="Landline_Number" #Landline_Number="ngModel" [(ngModel)]="branch.Landline_Number" class="form-control"
+                                    placeholder="Enter Landline No" phone="TR"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtStreet">{{"Mobile No"|translate}}</label>
+                                <!-- <span class="text-red" *ngIf="Telephone.invalid && (Telephone.dirty || Telephone.touched)">
+                                    <span *ngIf="Telephone.errors?.phone">{{"Enter Mobile No (xxxx-xxxxxxx)"|translate}}</span>
+                                </span> -->
+                                <input type="text" name="Telephone" #Telephone="ngModel" [(ngModel)]="branch.Telephone" class="form-control" placeholder="Enter Mobile No"
+                                    phone="TR" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="txtStreet">{{"Email"|translate}}</label>
+                                <!-- <span class="text-red" *ngIf="Branch_Email_address.invalid && (Branch_Email_address.dirty || Branch_Email_address.touched)">
+                                    <span *ngIf="Branch_Email_address.errors?.email">{{"example@mail.com"|translate}}</span>
+                                </span> -->
+                                <input type="text" name="Branch_Email_address" #Branch_Email_address="ngModel" [(ngModel)]="branch.Branch_Email_address"
+                                    class="form-control" placeholder="Enter Contact Person Email" email/>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtStreet">{{"Fax Number"|translate}}</label>
+                                <!-- <span class="text-red" *ngIf="Fax_Number.invalid && (Fax_Number.dirty || Fax_Number.touched)">
+                                    <span *ngIf="Fax_Number.errors?.phone">{{"Enter Fax No (xxx-xxxxxxx)"|translate}}</span>
+                                </span> -->
+                                <input type="text" name="Fax_Number" #Fax_Number="ngModel" [(ngModel)]="branch.Fax_Number" class="form-control" placeholder="Fax No."
+                                    phone="TR" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon>
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    </mat-icon> {{"Department"|translate}}
+                </ng-template>
+                <div class="row">    
+                    <!-- Main content -->
+                    <section class="content">
+                
+                        <!-- Default box -->
+                        <div class="box" style="padding:10px">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <li class="list-group-item" style="background-color:#00BEB5; color:#FFFFFF">
+                                        Excluded Departments
+                                    </li>
+                                    <div class="list-group" style="overflow-y: auto;height: 70%;">
+                                        <li (click)="selectDepartment(department)" [class.active]="department.isSelected" *ngFor="let department of branch.departments;" class="list-group-item list-group-item-action">
+                                            {{department.Department_Name}}
+                                        </li>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <ul style="list-style-type: none;">
+                                        <li>
+                                            <button (click)="pushAllToBranch()" [disabled]="isMovedLeft" class="btn" style="margin-top:10px; width:50px"> >> </button>
+                                        </li>
+                                        <li>
+                                            <button (click)="pushToBranch()" class="btn" style="margin-top:10px; width:50px"> > </button>
+                                        </li>
+                
+                                        <li>
+                                            <button (click)="pushBackToDepartment()" class="btn" style="margin-top:10px; width:50px">
+                                                < </button>
+                                        </li>
+                                        <li>
+                                            <button (click)="pushAllBackToDepartment()" [disabled]="isMovedRight" class="btn" style="margin-top:10px; width:50px">
+                                                << </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-5">
+                                    <li class="list-group-item" style="background-color:#00BEB5; color:#FFFFFF">
+                                        Branch Departments
+                                    </li>
+                                    <div class="list-group" style="overflow-y: auto;height: 70%;">
+                                        <li (click)="selectBranchDepartment(department)" [class.active]="department.isSelected" *ngFor="let department of branch.branchDepartments" class="list-group-item list-group-item-action">
+                                            <!-- {{department.Department_Name}} -->
+                                                {{department.Department_Name}}
+                                        </li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box -->
+                
+                    </section>
+                    <!-- /.content -->
+                </div>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon>
+                        <i class="fa fa-address-card-o"> </i>
+                    </mat-icon> {{"Services"|translate}}
+                </ng-template>
+                <div class="row">
+                    <div class="col-md-5">
+                        <li class="list-group-item" style="background-color:#00BEB5; color:#FFFFFF">
+                            Excluded Services
+                        </li>
+                        <div class="list-group" style="overflow-y: auto;height: 70%;">
+                            <li (click)="selectService(service)" [class.active]="service.isSelected" 
+                            *ngFor="let service of branch.services;"  class="list-group-item list-group-item-action">
+                                {{service.Service_Name}}
+                            <span *ngFor="let row of categoryList">
+                                <b *ngIf="row.id === branch.service.service_CatID">
+                                    ({{row.Services_Category_Name}})
+                                </b>
+                                </span>
+                            </li>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <ul style="list-style-type: none;">
+                            <li>
+                                <button (click)="pushAllToBranchs()" [disabled]="isMovedLeft" class="btn" style="margin-top:10px; width:50px"> >> </button>
+                            </li>
+                            <li>
+                                <button (click)="pushToBranchs()" class="btn" style="margin-top:10px; width:50px"> > </button>
+                            </li>
+                        
+                            <li>
+                                <button (click)="pushBackToService()" class="btn" style="margin-top:10px; width:50px"> < </button>
+                            </li>
+                            <li>
+                                <button (click)="pushAllBackToService()" [disabled]="isMovedRight" class="btn" style="margin-top:10px; width:50px"> << </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-5">
+                        <li class="list-group-item" style="background-color:#00BEB5; color:#FFFFFF">
+                            Branch Services
+                        </li>
+                        <div class="list-group" style="overflow-y: auto;height: 70%;">
+                            <li (click)="selectBranchService(service)" [class.active]="service.isSelected"
+                            *ngFor="let service of branch.branchServices" class="list-group-item list-group-item-action">
+                                {{service.Service_Name}}
+                                <span *ngFor="let row of categoryList">
+                                    <b *ngIf="row.id === branch.service.service_CatID">
+                                        ({{row.Services_Category_Name}})
+                                    </b>
+                                </span>
+                            </li>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </form>
+</div>
+
+<div>
+    <app-modal #mapModal class="modal-map">
+        <div class="app-modal-header">
+            {{"Select Location"|translate}}
+        </div>
+        <div class="app-modal-body">
+            <ngui-map zoom="6" center="39.925533, 32.866287" (mapClick)="onMapClick($event)">
+                <marker position="Kayseri, Turkey"></marker>
+            </ngui-map>
+        </div>
+        <div class="app-modal-footer">
+            <button type="button" class="btn btn-primary" (click)="mapModal.hide(); setMapLngLat()">{{"Save"|translate}}</button>
+            <button type="button" class="btn btn-primary" (click)="mapModal.hide()">{{"Cancel"|translate}}</button>
+        </div>
+    </app-modal>
+</div>

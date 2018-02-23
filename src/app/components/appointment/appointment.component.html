@@ -1,0 +1,411 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Appointment page
+            <small>it all starts here</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">Appointment</a></li>
+            <li class="active">Create</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <!-- Default box -->
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Create appointment here</h3>
+
+            </div>
+            <div class="box-body">
+                <div class="row" id="divAppointment">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-10">
+                        <!-- USERS LIST -->
+                        <div class="box box-info" style="border-left: 2px solid; border-left-color: #E3E3E3; box-shadow: 5px 15px 17px #F1F1F1;border-top-right-radius: 10px; border-top-left-radius: 10px;">
+                            <div class="box-header with-border" style="border-top-right-radius: 10px;  border-top-left-radius: 10px; background-color: #E4E4E4;">
+                              <i class="fa fa-circle" style="color:white" aria-hidden="true"></i>
+                              <i class="fa fa-circle" style="color:white" aria-hidden="true"></i>
+                              <i class="fa fa-circle" style="color:white" aria-hidden="true"></i>
+                            </div>
+                          <div class="box-header">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="progress-group">
+                                            <span class="progress-text">Step 1</span>
+                                            <span class="progress-number"> </span>
+
+                                            <div class="progress sm">
+                                                <div class="progress-bar progress-bar-aqua" style="width: 100%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="progress-group">
+                                            <span class="progress-text">Step 2</span>
+                                            <span class="progress-number"> </span>
+
+                                            <div class="progress sm">
+                                                <div class="progress-bar progress-bar-aqua" id="divStep2"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="progress-group">
+                                            <span class="progress-text">Step 3</span>
+                                            <span class="progress-number"> </span>
+
+                                            <div class="progress sm">
+                                                <div class="progress-bar progress-bar-aqua" id="divStep3"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  <div class="col-md-2">
+                                        <div class="progress-group">
+                                            <span class="progress-text">Step 4</span>
+                                            <span class="progress-number"> </span>
+
+                                            <div class="progress sm">
+                                                <div class="progress-bar progress-bar-aqua" id="divStep5"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="progress-group">
+                                            <span class="progress-text">Step 5</span>
+                                            <span class="progress-number"> </span>
+
+                                            <div class="progress sm">
+                                                <div class="progress-bar progress-bar-aqua" id="divStep4"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.box-header -->
+                          <form>
+                            <div class="box-body no-padding" id="dvStep1Data">
+                                <div class="box-header">
+                                    <h3 class="box-title">Please select service:</h3>
+                                </div>
+                                <div class="row box-header">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="ddlCategory">Category</label>
+                                            <select class="form-control" (change)="onChange(appiontmentData.Category)" id="ddlCategory" name="Category" [(ngModel)]="appiontmentData.Category">
+                                                      <option *ngFor="let row of allServicesCategory" value="{{row.id}}">{{row.Services_Category_Name}}</option> 
+											 </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="ddlService">Service</label>
+                                            <select class="form-control" name="Service" [(ngModel)]="appiontmentData.Service" id="ddlService">
+												  <option disabled>Select Service</option>
+                                                  <option *ngFor="let row of allServices" value="{{row.id}}">{{row.Service_Name}}</option>
+										 </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="ddlEmployee">Employee</label>
+                                            <select class="form-control" name="Employee" [(ngModel)]="appiontmentData.Employee" id="ddlEmployee">
+												  <option disabled>--Selecte Employee--</option>
+												 <option *ngFor="let row of allEmployee" value="{{row.id}}">{{row.First_Name}}</option>
+										 </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row box-header">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="txtAvailable">I'm Available on</label>
+                                            <input type="date" class="form-control" name="txtAvailable" [(ngModel)]="appiontmentData.txtAvailable" id="txtAvailable" placeholder="Select Date" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="ddlStart">Start by</label>
+                                            <select class="form-control" name="ddlStart" [(ngModel)]="appiontmentData.ddlStart" id="ddlStart">
+												  <option selected="selected">9:00 AM</option>
+												  <option>10:00 AM</option>
+												  <option>11:00 AM</option>
+												  <option>12:00 PM</option>
+												  <option>1:00 PM</option>
+												  <option>2:00 PM</option>
+												  <option>3:00 PM</option>
+												  <option>4:00 PM</option>
+												  <option>5:00 PM</option>
+										 </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="ddlFinish">Finish by</label>
+                                            <select class="form-control" name="ddlFinish" [(ngModel)]="appiontmentData.ddlFinish" id="ddlFinish">
+												  <option>9:00 AM</option>
+												  <option selected="selected">10:00 AM</option>
+												  <option>11:00 AM</option>
+												  <option>12:00 PM</option>
+												  <option>1:00 PM</option>
+												  <option>2:00 PM</option>
+												  <option>3:00 PM</option>
+												  <option>4:00 PM</option>
+												  <option>5:00 PM</option>
+										 </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box-body no-padding cstm-hide" id="dvStep2Data">
+                                <div class="box-header">
+                                    <h3 class="box-title">Below you can find list of available time slots for <b>Service</b> by <b>Employee</b>                                        . Select a time slot and proceed.</h3>
+                                </div>
+
+                                <ul class="users-list clearfix">
+                                    <li>
+                                        <label>
+											<input type="radio"  name="mettingTime" [(ngModel)]="appiontmentData.mettingTime"  value="9:00 AM"/>
+												 9:00 AM
+										 </label>
+                                    </li>
+                                    <li>
+                                        <label>
+											<input type="radio"  name="mettingTime" [(ngModel)]="appiontmentData.mettingTime"  value="10:00 AM"/>
+												 10:00 AM
+										 </label>
+                                    </li>
+                                    <li>
+                                        <label>
+											<input type="radio"  name="mettingTime" [(ngModel)]="appiontmentData.mettingTime"  value="11:00 AM"/>
+												11:00 AM
+										 </label>
+                                    </li>
+                                    <li>
+                                        <label>
+											<input type="radio"  name="mettingTime" [(ngModel)]="appiontmentData.mettingTime"  value="12:00 PM"/>
+												 12:00 PM
+										 </label>
+                                    </li>
+                                    <li>
+                                        <label>
+											<input type="radio"  name="mettingTime" [(ngModel)]="appiontmentData.mettingTime"  value="1:00 PM"/>
+												 1:00 PM
+										 </label>
+                                    </li>
+                                    <li>
+                                        <label>
+											<input type="radio"  name="mettingTime" [(ngModel)]="appiontmentData.mettingTime"  value="2:00 PM"/>
+												 2:00 PM
+									 </label>
+                                    </li>
+                                    <li>
+                                        <label>
+											<input type="radio"  name="mettingTime" [(ngModel)]="appiontmentData.mettingTime"  value="3:00 PM"/>
+												 3:00 PM
+									 </label>
+                                    </li>
+                                    <li>
+                                        <label>
+											<input type="radio"  name="mettingTime" [(ngModel)]="appiontmentData.mettingTime"  value="4:00 PM"/>
+												 4:00 PM
+									 </label>
+                                    </li>
+                                    <li>
+                                        <label>
+											<input type="radio"  name="mettingTime" [(ngModel)]="appiontmentData.mettingTime"  value="5:00 PM"/>
+												 5:00 PM
+									 </label>
+                                    </li>
+                                    <li>
+                                        <label>
+											<input type="radio"  name="mettingTime" [(ngModel)]="appiontmentData.mettingTime"  value="6:00 PM"/>
+												 6:00 PM
+									 </label>
+                                    </li>
+                                    <li>
+                                        <label>
+											<input type="radio"  name="mettingTime" [(ngModel)]="appiontmentData.mettingTime"  value="7:00 PM"/>
+												 7:00 PM
+									 </label>
+                                    </li>
+                                    <li>
+                                        <label>
+											<input type="radio"  name="mettingTime" [(ngModel)]="appiontmentData.mettingTime"  value="8:00 PM"/>
+												 8:00 PM
+									 </label>
+                                    </li>
+                                    <li>
+                                        <label>
+											<input type="radio"  name="mettingTime" [(ngModel)]="appiontmentData.mettingTime"  value="9:00 PM"/>
+												 9:00 PM
+									 </label>
+                                    </li>
+
+                                </ul>
+                                <!-- /.users-list -->
+                            </div>
+
+                            <div class="box-body no-padding cstm-hide" id="dvStep3Data">
+                                <div class="box-header">
+                                    <h3 class="box-title">You selected to book <b>Service</b> by <b>Employee</b> at <b>Time</b> on <b>Date</b>.
+                                        <br/> Please provide your details below to proceed with booking.</h3>
+                                </div>
+                                <div class="row box-header">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="txtName">Name</label>
+                                            <input type="text" class="form-control" name="txtName" [(ngModel)]="appiontmentData.txtName"  id="txtName" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="txtPhone">Phone</label>
+                                            <input type="number" name="txtPhone" [(ngModel)]="appiontmentData.txtPhone" class="form-control" id="txtPhone" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="txtEmail">Email</label>
+                                            <input type="email" name="txtEmail" [(ngModel)]="appiontmentData.txtEmail" class="form-control" id="txtEmail" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row box-header">
+                                    <div class="col-md-9">
+                                        <div class="form-group">
+                                            <label for="txtNotes">Notes</label>
+                                            <textarea class="form-control" name="txtNotes" [(ngModel)]="appiontmentData.txtNotes" id="txtNotes"> </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box-body no-padding cstm-hide" id="dvStep4Data">
+                                <div class="box-header">
+                                    <h3 class="box-title" style="color: #0f0f0f">Thank you! Your booking is complete. We will contact with you shortly.</h3>
+                                </div>
+                                <div class="box-header">
+                                  <h2>Your Appiontment  Details</h2>
+                                  <div class="row">
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label for="ddlCategory">Category:</label>
+                                        <b style="color: #0f0f0f">{{appiontmentData.Category}}</b>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label for="ddlCategory">Service:</label>
+                                        <b style="color: #0f0f0f">{{appiontmentData.Service}}</b>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label for="ddlCategory">Employee:</label>
+                                        <b style="color: #0f0f0f">{{appiontmentData.Employee}}</b>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label for="ddlCategory">Date:</label>
+                                        <b style="color: #0f0f0f">{{appiontmentData.txtAvailable}}</b>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label for="ddlCategory">Starting Time:</label>
+                                        <b style="color: #0f0f0f">{{appiontmentData.ddlStart}}</b>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label for="ddlCategory">Ending Time:</label>
+                                        <b style="color: #0f0f0f">{{appiontmentData.ddlFinish}}</b>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label for="ddlCategory">Your Name:</label>
+                                        <b style="color: #0f0f0f">{{appiontmentData.txtName}}</b>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label for="ddlCategory">Your Phone:</label>
+                                        <b style="color: #0f0f0f">{{appiontmentData.txtPhone}}</b>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label for="ddlCategory">Your Email: </label>
+                                        <b style="color: #0f0f0f">{{appiontmentData.txtEmail}}</b>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label for="ddlCategory">Your Notes:</label>
+                                        <b style="color: #0f0f0f">{{appiontmentData.txtNotes}}</b>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label for="ddlCategory">Your Payment Method:</label>
+                                        <b style="color: #0f0f0f">{{appiontmentData.paymentMethod}}</b>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label for="ddlCategory">Selected Metting Time:</label>
+                                        <b style="color: #0f0f0f">{{appiontmentData.mettingTime}}</b>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            <div class="box-body no-padding cstm-hide" id="dvStep5Data">
+                                <div class="box-header">
+                                    <h3 class="box-title">Please tell us how you would like to pay:</h3>
+                                </div>
+                            <div class="box-header">
+                              <input name="paymentMethod" value="local" type="radio" [(ngModel)]="appiontmentData.paymentMethod" > I will pay locally <br>
+                              <input name="paymentMethod" value="payPal" [(ngModel)]="appiontmentData.paymentMethod" type="radio"> I will pay now with PayPal
+                              <img src="https://www.booking-wp-plugin.com/demo/1/wp-content/plugins/appointment-booking/frontend/resources/images/paypal.png"
+                                   alt="PayPal">
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                          </div>
+                          </form>
+                        </div>
+                        <!-- /.box-body -->
+
+                    </div>
+                    <!--/.box -->
+                </div>
+            </div>
+
+            <div class="box-footer text-center">
+                <button type="button" id="btnNext" (click)="nextClick(checkOpen+1)" class="btn btn-primary pull-right">Next</button>
+                <button type="button" id="btnBooking" (click)="bookingClick()" class="btn btn-primary pull-right cstm-hide">Book</button>
+                <button type="button" id="btnBack" (click)="backClick(checkOpen)"  class="btn btn-primary pull-left cstm-hide">Back</button>
+            </div>
+            <!-- /.box-footer -->
+        </div>
+        <!-- /.box -->
+
+    </section>
+</div>

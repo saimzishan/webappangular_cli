@@ -1,0 +1,953 @@
+<div class="box-body ">
+  <div class="box-body col-md-12 panel">
+    <h4 class="bolck-head">All Employees
+      <div [hidden]="!mainView">
+        <button data-toggle="collapse" href="#collapse2" (click)="setFrom();chechCustom()" class="btn btn-success push-right">
+          <i class="fa fa-plus-square-o"></i>{{"New Employ"|translate}}
+        </button>
+      </div>
+
+    </h4>
+    <div *ngIf="mainView && addSucess" id="collapse2" class="panel-collapse collapse">
+      <div class="row">
+        <div class="col-md-9 col-md-offset-3">
+          <span class="pull-right"> <input (change)="assignNewData($event)" name="ISCHECKED" [checked]="ISCHECKED" type="checkbox"> </span>
+          <div class="panel-body" style="background-color: #FFFFFF">
+            <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
+              <div class="row">
+                <img src="https://www.w3schools.com/bootstrap/cinqueterre.jpg" class="img-thumbnail" height="10px" width="100px" alt="Cinque Terre">
+              </div>
+              <mat-tab-group mat-tab-body-content [disableRipple]=true (selectedTabChange)="onLinkClick($event)" [(selectedIndex)]="currentTabIndex">
+                <i class="fa fa-info-circle"></i>
+                <mat-tab>
+                  <ng-template mat-tab-label>
+                    <mat-icon>
+                      <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    </mat-icon> {{"Info"|translate}}
+                  </ng-template>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name">First Name :</label>
+                        <span class="text-red">
+                          <b> *</b>
+                        </span>
+                        <input type="text" class="form-control" id="firstname" required name="firstname" formControlName="First_Name">
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name">Last Name :</label>
+                        <span class="text-red">
+                          <b> *</b>
+                        </span>
+                        <input type="text" class="form-control" id="lastname" required name="lastname" formControlName="Last_Name">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="name">Email :</label>
+                        <span class="text-red">
+                          <b> *</b>
+                        </span>
+                        <input #email email type="email" class="form-control" id="email" required name="email" formControlName="Email">
+                        <small class="text-red" *ngIf="userForm.controls.Email.invalid && userForm.controls.Email.touched ">
+                          Email is required with valid formate
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name">Password :</label>
+                        <span class="text-red">
+                          <b> *</b>
+                        </span>
+                        <input type="password" #password class="form-control" id="password" required name="password" formControlName="Password">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name">Confrom Password :</label>
+                        <span class="text-red">
+                          <b> *</b>
+                        </span>
+                        <input type="password" (keyup)="confirmPass()" class="form-control" id="conPassword" required name="conPassword" formControlName="conPassword">
+                        <small class="text-red" *ngIf=" isMatch">
+                          Confrom Password did not match
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                   
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="name">Role :</label>
+                        <span class="text-red">
+                          <b> *</b>
+                        </span>
+                        <select class="form-control" (change)="onRoleChange(); isDoctor? getTimingOfDoctor.show():'' " name="roleStatus" #status formControlName="Role" required>
+                          <option value="0" [disabled]="true">--Select --</option>
+                          <option *ngFor="let row of tempRoles" value="{{row.id}}">{{row.Name}}</option>
+                        </select>
+                      </div>
+                      
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="name">Blood type:</label>
+                        <select class="form-control" name="blodType" #blodType formControlName="Blood_Type">
+                          <option value="0" [disabled]="true">--Select --</option>
+                          <option value="AB-">AB-</option>
+                          <option value="AB+">AB+</option>
+                          <option value="A-">A-</option>
+                          <option value="A+">A+</option>
+                          <option value="B-">B-</option>
+                          <option value="B+">B+</option>
+                          <option value="O-">O-</option>
+                          <option value="O+">O+</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="name">Marital status :</label>
+                        <select class="form-control" name="maritalStatus" #maritalStatus formControlName="Marital_Status">
+                          <option value="0" [disabled]="true">--Select --</option>
+                          <option value="1">Single</option>
+                          <option value="2">Married</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name">Driving Licence :</label>
+                        <span class="text-red">
+                          <b> *</b>
+                        </span>
+                        <input #drivingLicence type="text" class="form-control" id="drivingLicence" required name="drivingLicence" formControlName="Driving_Licence">
+                        <small class="text-red" *ngIf="userForm.controls.Driving_Licence.invalid && userForm.controls.Driving_Licence.touched">
+                          DrivingLicence is required with valid formate
+                        </small>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name">Bank IBAN :</label>
+                        <span class="text-red">
+                          <b> *</b>
+                        </span>
+                        <input #BankIBAN type="text" class="form-control" id="BankIBAN" required name="BankIBAN" formControlName="Bank_Account_IBAN">
+                        <small class="text-red" *ngIf="userForm.controls.Bank_Account_IBAN.invalid && userForm.controls.Bank_Account_IBAN.touched">
+                          BankIBAN is required with valid formate
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name">Birth Place :</label>
+                        <input #birthPlace type="text" class="form-control" required id="birthPlace" name="birthPlace" formControlName="Birth_place">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name">Adderss :</label>
+                        <textarea style="width: 100%;" rows="3" id="adderss" name="adderss" formControlName="Address"></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                </mat-tab>
+                <mat-tab>
+                  <ng-template mat-tab-label>
+                    <mat-icon>
+                      <i class="fa fa-address-card-o"> </i>
+                    </mat-icon> {{"Experiance"|translate}}
+                  </ng-template>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="name">Graduation:</label>
+                        <input type="text" class="form-control" id="Graduation" name="Graduation" formControlName="Graduation">
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name">Speciality :</label>
+                        <input type="text" class="form-control" id="Speciality" required name="Speciality" formControlName="Speciality">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name">Experiance :</label>
+                        <input type="text" #Experiance class="form-control" id="Experiance" required name="Experiance" formControlName="Experience">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="name">External company name :</label>
+                        <input type="text" #externalcompanyName class="form-control" id="externalcompanyName" required name="externalcompanyName"
+                          formControlName="externalcompanyName">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name">Joining date :</label>
+                        <input type="date" #joiningDate class="form-control" id="joiningDate" required name="joiningDate" [(ngModel)] = "userForm.Date_of_Joining" formControlName="Date_of_Joining">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name">Leaving date :</label>
+                        <input type="date" #leavingDate class="form-control" id="leavingDate" required name="leavingDate" [(ngModel)] ="userForm.Date_of_Leaving" formControlName="Date_of_Leaving">
+                      </div>
+                    </div>
+                  </div>
+                </mat-tab>
+                <mat-tab>
+                  <ng-template mat-tab-label>
+                    <mat-icon>
+                      <i class="fa fa-address-book-o" aria-hidden="true"></i>
+                    </mat-icon> {{"Contact"|translate}}
+                  </ng-template>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name">Emergency Contect Name :</label>
+                        <input type="text" #emergencyConnect class="form-control" id="emergencyConnect" required name="emergencyConnect" formControlName="Emergency_Contact_Person">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name">Emergency Contect Number :</label>
+                        <input type="number" #emergencyConnectNumber class="form-control" id="emergencyConnectNumber" required name="emergencyConnectNumber"
+                          formControlName="Emergency_Contact_Number">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name">Phone :</label>
+                        <input type="number" #Skills class="form-control" id="Phone" required name="Phone" formControlName="Internal_Telephone_Extension">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name">Social Security number :</label>
+                        <input type="number" #socialSecurityNumber class="form-control" id="socialSecurityNumber" required name="socialSecurityNumber"
+                          formControlName="Social_Security_Number">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name">Employee commition rate :</label>
+                        <input type="number" #employeeCommitionRate class="form-control" id="employeeCommitionRate" required name="employeeCommitionRate"
+                          formControlName="Comission_Rate">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name">Employee commition type:</label>
+                        <select class="form-control" name="commitionType" #commitionType formControlName="Employee_Comission_Type" required>
+                          <option value="0" selected>--Select --</option>
+                          <option value="1">Yes</option>
+                          <option value="2">No</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </mat-tab>
+                <mat-tab>
+                  <ng-template mat-tab-label>
+                    <mat-icon>
+                      <i class="fa fa-check" aria-hidden="true"></i>
+                    </mat-icon> {{"Services"|translate}}
+                  </ng-template>
+                  <div *ngFor="let row of serviceList; let i=index">
+                    <div class="container row customColor">
+                      <div class="col-md-6">
+                        <div class="form-inline">
+                          <div style="float: left; padding-right: 7px;">
+                            <input type="checkbox" [checked] = "row.mainCheck" (click)="cosmeticDentistry($event, row.mainCheckBoxId, i)">
+                          </div>
+                          <div>
+                            <b>{{row.mainCheckBoxName}}</b>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-2" style="padding-top: 5px;">
+                        <div class="form-group">
+                          <small for="name">PRICE</small>
+                        </div>
+                      </div>
+                      <div class="col-md-3" style="padding-top: 5px;">
+                        <div class="form-group">
+                          <small for="name">CAPACITY (MIN AND MAX)</small>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row" style="padding-left: 15px;" *ngFor="let subRow of subDynamicFields; let j=index">
+                      <div *ngIf="subRow.mainCheckBoxId === row.mainCheckBoxId">
+                      <div class="col-md-6" >
+                        <div class="form-inline">
+                          <div style="float: left; padding-right: 7px;">
+                            <input type="checkbox" [checked] = "subRow.subCheck" (click)="checkMain(j, row.mainCheckBoxId, i)">
+                          </div>
+                          <div>
+                            <span>{{subRow.subCheckBoxName}}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <input  type="test" value="{{subRow.subPrice}}" [readonly] = "!subRow.subCheck" name="subRowPrice" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <input type="test" value="{{subRow.subCapMin}}" [readonly] = "!subRow.subCheck" name="subRowCapMin" class="form-control">
+                        </div>
+
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <input type="test" value="{{subRow.subCapMax}}" [readonly] = "!subRow.subCheck" name="subRowCapMax" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </mat-tab>
+
+              </mat-tab-group>
+              <input *ngIf="currentTabIndex == 3" type="submit" name="submit" value="Save" class="pull-right btn btn-success">
+              <button *ngIf="currentTabIndex != 3" (click)="onLinkClick(123)" class="pull-right btn btn-success">Next</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div *ngIf="mainView">
+    <div class="service-group">
+      <!-- Heading Start -->
+      <div class="panel-group">
+        <div class="panel-default">
+          <table id="tblEmployeeDataPartial" class="table table-bordered table-striped table-style">
+            <thead>
+              <tr>
+                <th class="sorting_desc" aria-sort="descending">{{"ID"|translate}} </th>
+                <th>{{"First name"|translate}} </th>
+                <th>{{"Last name"|translate}} </th>
+                <th>Action </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let row of employeeList; let last = last">
+                <td (click)="changeView(row, 'not')">{{row.id}}</td>
+                <td (click)="changeView(row, 'not')">{{row.First_Name}}
+                  <div id="{{row.id}}" class="panel-collapse collapse">
+                    <!--footer of panel-->
+                  </div>
+                </td>
+                <td (click)="changeView(row, 'not')">{{row.Last_Name}}</td>
+                <td>
+                  <button class="text-danger" (click)="deleteEmp.show();deleteEmploy(row.id)" class="btn btn-danger btn-xs">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>Delete</button>
+                </td>
+                {{last ? initTable() : ''}}
+
+              </tr>
+
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>{{"ID"|translate}} </th>
+                <th>{{"First name"|translate}} </th>
+                <th>{{"Last name"|translate}} </th>
+                <th>Action </th>
+              </tr>
+            </tfoot>
+          </table>
+          <!--<div class="panel-heading">
+          <h4 class="panel-title form-inline">
+            &lt;!&ndash; <div class="head-content"> &ndash;&gt;
+            <svg height="14" width="15">
+              <circle cx="7" cy="7" r="7" stroke="white" stroke-width="2" fill="#0F0" />
+            </svg>
+            &lt;!&ndash; </div> &ndash;&gt;
+
+            <a data-toggle="collapse" href="#{{service.id}}" class="head-content head-title">{{service.Service_Name}}
+              <i class="fa fa-chevron-circle-down icon-pop" aria-hidden="true"></i>
+            </a>
+            <h5 class="service-duration">{{service.Duration}}</h5>
+            <h5 class="service-price">{{service.Price}}</h5>
+            <input type="checkbox" class="head-content service-check">
+          </h4>
+        </div>
+
+        <div id="{{service.id}}" class="panel-collapse collapse">
+          <div class="panel-body">
+            <form>
+              <div class="row">
+                <img src="cinqueterre.jpg" class="img-thumbnail" alt="Cinque Terre">
+              </div>
+            </form>
+          </div>
+          <div class="panel-footer"></div> &lt;!&ndash;footer of panel&ndash;&gt;
+        </div>-->
+        </div>
+      </div>
+      <!-- Heading End -->
+    </div>
+  </div>
+
+
+  <!--
+Remove sertificate Model
+-->
+  <app-modal #deleteEmp>
+    <div class="app-modal-header">
+      <h3>{{"Confirmation"|translate}}</h3>
+    </div>
+    <div class="app-modal-body">
+      {{"This Employee also remove from records, Are you sure you want to remove this record ?"|translate}}
+    </div>
+    <div class="app-modal-footer">
+      <button type="button" class="btn btn-primary" (click)="deleteEmployee();deleteEmp.hide()">{{"Yes"|translate}}</button>
+      <button type="button" class="btn btn-default" (click)="deleteEmp.hide()">{{"No"|translate}}</button>
+    </div>
+  </app-modal>
+  <!--
+  Remove sertificate Model
+  -->
+
+
+  <div *ngIf="singleView">
+    <div class="row">
+      <div class="col-md-4">
+        <div style="cursor: pointer; margin-left:-1px" class="custom-list alert-info" (click)="changeView('123', 'not')">All Employees</div>
+        <ul>
+          <li style="cursor: pointer" *ngFor="let row of employeeList" [class.active]="row.id == employeeActive" [class.liDisabled]="row.id == employeeActive"
+            class="disabled" class="custom-list" [ngClass]="" (click)="changeView(row, row.id)">
+            <div class="list-title">{{row.First_Name +' '+ row.Last_Name}}</div>
+          </li>
+          <!-- (click)="setService(serviceItem)" click event of li tag -->
+        </ul>
+      </div>
+      <div class="col-md-8">
+        <div class="panel-body" style="background-color: #FFFFFF">
+          <form [formGroup]="userForm" (ngSubmit)="onEditSubmit()" novalidate>
+
+            <div class="row">
+              <img src="https://www.w3schools.com/bootstrap/cinqueterre.jpg" class="img-thumbnail" height="10px" width="100px" alt="Cinque Terre">
+            </div>
+            <mat-tab-group mat-tab-body-content [disableRipple]=true (selectedTabChange)="onLinkClick($event)" [(selectedIndex)]="currentTabIndex">
+              <i class="fa fa-info-circle"></i>
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <mat-icon>
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                  </mat-icon> {{"Info"|translate}}
+                </ng-template>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">First Name :</label>
+                      <span class="text-red">
+                        <b> *</b>
+                      </span>
+                      <input formControlName="First_Name" [(ngModel)]="editEmployees.First_Name" type="text" class="form-control" id="firstname"
+                        required name="firstname" formControlName="First_Name">
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">Last Name :</label>
+                      <span class="text-red">
+                        <b> *</b>
+                      </span>
+                      <input formControlName="Last_Name" [(ngModel)]="editEmployees.Last_Name" type="text" class="form-control" id="lastname" required
+                        name="lastname" formControlName="Last_Name">
+                    </div>
+                  </div>
+                </div>
+                <div [hidden]="true" class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="name">Email :</label>
+                      <span class="text-red">
+                        <b> *</b>
+                      </span>
+                      <input #email email type="email" class="form-control" id="email" required name="email" formControlName="Email" [(ngModel)]="editEmployees.Email">
+                      <small class="text-red" *ngIf="userForm.controls.Email.invalid && userForm.controls.Email.touched ">
+                        Email is required with valid formate
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div [hidden]="true" class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">Password :</label>
+                      <span class="text-red">
+                        <b> *</b>
+                      </span>
+                      <input type="password" #password class="form-control" id="password" value="123" required val name="password" [(ngModel)]="editEmployees.Password"
+                        formControlName="Password">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="name">Role :</label>
+                      <span class="text-red">
+                        <b> *</b>
+                      </span>
+                      <select class="form-control" name="roleStatus" #status formControlName="Role" formControlName="Role" required [(ngModel)]="editEmployees.Role">
+                        <option value="0" [disabled]="true">--Select --</option>
+                        <option *ngFor="let row of tempRoles" value="{{row.id}}">{{row.Name}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="name">Blood type:</label>
+                      <select class="form-control" formControlName="Blood_Type" [(ngModel)]="editEmployees.Blood_Type" name="blodType" #blodType
+                        formControlName="Blood_Type">
+                        <option value="0" [disabled]="true">--Select --</option>
+                        <option value="AB-">AB-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="A-">A-</option>
+                        <option value="A+">A+</option>
+                        <option value="B-">B-</option>
+                        <option value="B+">B+</option>
+                        <option value="O-">O-</option>
+                        <option value="O+">O+</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="name">Marital status :</label>
+                      <select class="form-control" name="maritalStatus" formControlName="Marital_Status" [(ngModel)]="editEmployees.Marital_Status"
+                        #maritalStatus formControlName="Marital_Status">
+                        <option value="0" [disabled]="true">--Select --</option>
+                        <option value="1">Single</option>
+                        <option value="2">Married</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">Driving Licence :</label>
+                      <span class="text-red">
+                        <b> *</b>
+                      </span>
+                      <input #drivingLicence type="text" class="form-control" id="drivingLicence" required name="drivingLicence" formControlName="Driving_Licence"
+                        [(ngModel)]="editEmployees.Driving_Licence">
+                      <small class="text-red" *ngIf="userForm.controls.Driving_Licence.invalid && userForm.controls.Driving_Licence.touched">
+                        DrivingLicence is required with valid formate
+                      </small>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">Bank IBAN :</label>
+                      <span class="text-red">
+                        <b> *</b>
+                      </span>
+                      <input #BankIBAN type="text" class="form-control" id="BankIBAN" required name="BankIBAN" formControlName="Bank_Account_IBAN"
+                        [(ngModel)]="editEmployees.Bank_Account_IBAN">
+                      <small class="text-red" *ngIf="userForm.controls.Bank_Account_IBAN.invalid && userForm.controls.Bank_Account_IBAN.touched">
+                        BankIBAN is required with valid formate
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">Birth Place :</label>
+                      <input #birthPlace type="text" class="form-control" required id="birthPlace" name="birthPlace" formControlName="Birth_place"
+                        [(ngModel)]="editEmployees.Birth_place">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">Adderss :</label>
+                      <textarea style="width: 100%;" rows="3" id="adderss" [(ngModel)]="editEmployees.Address" name="adderss" formControlName="Address"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+              </mat-tab>
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <mat-icon>
+                    <i class="fa fa-address-card-o"> </i>
+                  </mat-icon> {{"Experiance"|translate}}
+                </ng-template>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">Graduation:</label>
+                      <input type="text" class="form-control" id="Graduation" name="Graduation" [(ngModel)]="editEmployees.Graduation" formControlName="Graduation">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">Certificates :</label>
+                      <input type="file" (change)="handleFileSelect($event)" />
+                    </div>
+                    <div *ngIf="fdLength">
+                      <div class="row" *ngFor="let row of fdList; let i = index">
+                        <div class="col-md-6">
+                          <label>{{row.name}}</label>
+                        </div>
+                        <div class="col-md-2" *ngIf="row.check">
+                          <button (click)="deleteService.show(i);removeFile(row.id, i)" class="btn btn-danger btn-xs">Remove</button>
+                        </div>
+                        <div class="col-md-3">
+                          <div *ngIf="!row.check">
+                            <button style="width: 55px;" class="btn btn-success btn-xs" (click)="uploadCertificate(editEmployees.EmployeeID, i)">Upload</button>
+                          </div>
+                          <label *ngIf="row.check" class="text-green text-bold">
+                            <i class="fa fa-check" aria-hidden="true">Uploaded</i>
+                          </label>
+                        </div>
+                        <br>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!--
+Remove sertificate Model
+-->
+                <app-modal #deleteService>
+                  <div class="app-modal-header">
+                    <h3>{{"Confirmation"|translate}}</h3>
+                  </div>
+                  <div class="app-modal-body">
+                    {{"This file also remove from records, Are you sure you want to remove this file ?"|translate}}
+                  </div>
+                  <div class="app-modal-footer">
+                    <button type="button" class="btn btn-primary" (click)="deleteCertificatec();deleteService.hide()">{{"Yes"|translate}}</button>
+                    <button type="button" class="btn btn-default" (click)="deleteService.hide()">{{"No"|translate}}</button>
+                  </div>
+                </app-modal>
+                <!--
+              Remove sertificate Model
+              -->
+
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">Speciality :</label>
+                      <input type="text" class="form-control" id="Speciality" required name="Speciality" [(ngModel)]="editEmployees.Speciality"
+                        formControlName="Speciality">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">Experiance :</label>
+                      <input type="text" #Experience class="form-control" id="Experience" required name="Experience" [(ngModel)]="editEmployees.Experience"
+                        formControlName="Experience">
+                    </div>
+                  </div>
+                  </div>
+                  <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="name">External company name :</label>
+                      <input type="text" #externalcompanyName class="form-control" id="externalcompanyName" required name="External_Company_Name"
+                        [(ngModel)]="editEmployees.externalcompanyName" formControlName="externalcompanyName">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">Joining date :</label>
+                      <input type="date" #joiningDate class="form-control" id="joiningDate" required name="joiningDate" [(ngModel)]="editEmployees.Date_of_Joining"
+                        formControlName="Date_of_Joining">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">Leaving date :</label>
+                      <input type="date" #leavingDate class="form-control" id="leavingDate" required name="leavingDate" [(ngModel)]="editEmployees.Date_of_Leaving"
+                        formControlName="Date_of_Leaving">
+                    </div>
+                  </div>
+                </div>
+
+              </mat-tab>
+
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <mat-icon>
+                    <i class="fa fa-address-book-o" aria-hidden="true"></i>
+                  </mat-icon> {{"Contact"|translate}}
+                </ng-template>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">Emergency Contect Name :</label>
+                      <input type="text" #emergencyConnect class="form-control" id="emergencyConnect" required name="emergencyConnect" formControlName="Emergency_Contact_Person"
+                        [(ngModel)]="editEmployees.Emergency_Contact_Person">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">Emergency Contect Number :</label>
+                      <input type="number" #emergencyConnectNumber class="form-control" id="emergencyConnectNumber" required name="emergencyConnectNumber"
+                        formControlName="Emergency_Contact_Number" [(ngModel)]="editEmployees.Emergency_Contact_Number">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">Phone :</label>
+                      <input type="number" #Skills class="form-control" id="Phone" required name="Phone" formControlName="Internal_Telephone_Extension"
+                        [(ngModel)]="editEmployees.Internal_Telephone_Extension">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">Social Security number :</label>
+                      <input type="number" #socialSecurityNumber class="form-control" id="socialSecurityNumber" required name="socialSecurityNumber"
+                        formControlName="Social_Security_Number" [(ngModel)]="editEmployees.Social_Security_Number">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">Employee commition rate :</label>
+                      <input type="number" #employeeCommitionRate class="form-control" id="employeeCommitionRate" required name="employeeCommitionRate"
+                        formControlName="Comission_Rate" [(ngModel)]="editEmployees.Comission_Rate">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">Employee commition type:</label>
+                      <select class="form-control" name="commitionType" #commitionType formControlName="Employee_Comission_Type" [(ngModel)]="editEmployees.Employee_Comission_Type"
+                        required>
+                        <option value="0" selected>--Select --</option>
+                        <option value="1">Yes</option>
+                        <option value="2">No</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <mat-icon>
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                  </mat-icon> {{"Services"|translate}}
+                </ng-template>
+                <div *ngFor="let row of serviceList; let i=index">
+                  <div class="container row customColor">
+                    <div class="col-md-6">
+                      <div class="form-inline">
+                        <div style="float: left; padding-right: 7px;">
+                          <input type="checkbox" [checked] = "row.mainCheck" (click)="cosmeticDentistry($event, row.mainCheckBoxId, i)">
+                        </div>
+                        <div>
+                          <b>{{row.mainCheckBoxName}}</b>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-2" style="padding-top: 5px;">
+                      <div class="form-group">
+                        <small for="name">PRICE</small>
+                      </div>
+                    </div>
+                    <div class="col-md-3" style="padding-top: 5px;">
+                      <div class="form-group">
+                        <small for="name">CAPACITY (MIN AND MAX)</small>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="row" style="padding-left: 15px;" *ngFor="let subRow of subDynamicFields; let j=index">
+                    <div *ngIf="subRow.mainCheckBoxId === row.mainCheckBoxId">
+                    <div class="col-md-6" >
+                      <div class="form-inline">
+                        <div style="float: left; padding-right: 7px;">
+                          <input type="checkbox" [checked] = "subRow.subCheck" (click)="checkMain(j, row.mainCheckBoxId, i)">
+                        </div>
+                        <div>
+                          <span>{{subRow.subCheckBoxName}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <input  type="test" value="{{subRow.subPrice}}" [readonly] = "!subRow.subCheck" name="subRowPrice" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <input type="test" value="{{subRow.subCapMin}}" [readonly] = "!subRow.subCheck" name="subRowCapMin" class="form-control">
+                      </div>
+
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <input type="test" value="{{subRow.subCapMax}}" [readonly] = "!subRow.subCheck" name="subRowCapMax" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+            <!--<input type="submit" name="submit" value="Update" class="pull-right btn btn-success">-->
+            <button type="submit" class="pull-right btn btn-success">Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <popover-content #addUserPop title="Add Category" placement="bottom" [animation]="true" [closeOnClickOutside]="true">
+    <!-- <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="txtClinicName">{{"User Name"|translate}}</label>
+          <input type="text" name="strFirstName" #strFirstName="ngModel" [(ngModel)]="employee.strFirstName" class="form-control" placeholder="Enter  Name"
+                 required/>
+        </div>
+        <small class="massege" [hidden]="userForm.controls.strFirstName.valid || (userForm.controls.strFirstName.pristine) || (userForm.controls.strFirstName.untouched)">
+          {{"First Name"|translate}}
+        </small>
+      </div>
+
+      <hr>
+      <div class="footer">
+        <input type="submit" name="submit" value="{{Save|translate}}" (click)="addUserPop.hide()" class="btn btn-block" md-raised-button>
+        <button type="button" class="btn btn-default" (click)="addUserPop.hide()">{{"Cancel"|translate}}</button>
+      </div>
+    </form>-->
+  </popover-content>
+</div>
+<!-- Get timing of doctor -->
+<!-- <app-modal #getTimingOfDoctor class="modal-map" [customWidth]="35">
+    <div class="app-modal-header">
+        {{"Available Timing"|translate}}
+        <span class="pull-right">
+            
+        </span>
+    </div>
+    <div class="app-modal-body">
+        <div class="box-body">
+            <form>
+                  <div class="col-md-6">
+                      <div class="form-group">
+                      <label for="name">Select Day:</label>
+                        <select class="form-control" name="Week_Day">
+                        <option value="0">--Select--</option>                          
+                          <option value="1">Monday</option>
+                          <option value="2">Tuesday</option>
+                          <option value="3">Wednesday</option>
+                          <option value="4">Thursday</option>
+                          <option value="5">Friday</option>
+                          <option value="6">Saturday</option>
+                          <option value="7">Sunday</option>
+                        </select>
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label for="name">Status:</label>
+                            <select class="form-control" name="Week_Day">
+                            <option value="0">--Select--</option>                          
+                              <option value="1">Active</option>
+                              <option value="2">Panding</option>
+                            </select>
+                          </div>
+                  </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="name">Start Timing:</label>
+                    <select class="form-control" name="start_time">
+                        <option value="0">--Select--</option>
+                        <option value="1">4AM</option>
+                        <option value="2">6AM</option>
+                        <option value="3">8AM</option>
+                        <option value="4">10AM</option>
+                        <option value="5">12PM</option>
+                        <option value="6">2PM</option>
+                        <option value="7">4PM</option>
+                        <option value="8">6PM</option>
+                        <option value="8">8PM</option>
+                        <option value="10">10PM</option>
+                      </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">End Timing:</label>
+                      <select class="form-control" name="end_time">
+                          <option value="0">--Select--</option>                        
+                          <option value="1">5AM</option>
+                          <option value="2">7AM</option>
+                          <option value="3">9AM</option>
+                          <option value="4">11AM</option>
+                          <option value="5">1PM</option>
+                          <option value="6">3PAM</option>
+                          <option value="7">5PM</option>
+                          <option value="8">7PM</option>
+                          <option value="9">9PM</option>
+                          <option value="10">11PM</option>
+                        </select>
+                    </div>
+                  </div>
+              </form>
+        </div>
+    </div>
+    <button class="btn btn-success pull-right" (click)="getTimingOfDoctor()">Save</button>
+    <div class="app-modal-footer">
+      <button class="btn btn-success" (click)="getTimingOfDoctor.hide()">Save</button>
+      <button class="btn btn-default" (click)="getTimingOfDoctor.hide()">Cancel</button>
+    </div>
+ 
+</app-modal>         -->
+  <!-- Get timing of doctor -->

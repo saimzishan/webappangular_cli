@@ -1,0 +1,511 @@
+.left-pad {
+  padding-left: 10px;
+}
+
+.top-pad {
+  padding-top: 1px;
+}
+
+.txt-left {
+  text-align: left !important;
+}
+
+.accordion-toggle:after {
+  /* symbol for "opening" panels */
+  font-family: 'Glyphicons Halflings';
+  /* essential for enabling glyphicon */
+  content: "\e114";
+  /* adjust as needed, taken from bootstrap.css */
+  float: right;
+  /* adjust as needed */
+  color: white;
+  /* adjust as needed */
+}
+
+.accordion-toggle.collapsed:after {
+  /* symbol for "collapsed" panels */
+  /* adjust as needed, taken from bootstrap.css */
+  content: "\e080";
+}
+
+.background-employee {
+  background: white !important;
+}
+
+.show-Emplyee-form-style {
+  overflow-y: auto;
+  overflow-x: hidden !important;
+  height: 60%;
+  max-height: 70% !important;
+  max-width: 100% !important;
+}
+
+.edit-form-style {
+  /* overflow-y: hidden !important; */
+  overflow-x: hidden !important;
+  max-height: 100% !important;
+  max-width: 100% !important;
+}
+
+.add-service {
+  overflow-y: hidden !important;
+  overflow-x: hidden !important;
+  height: 42% !important;
+  max-width: 100% !important;
+}
+
+.edit-form-department-style {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  /* max-height: 60% !important; */
+  /* max-width: 70% !important; */
+}
+
+
+/* Styles for tab labels */
+
+.mat-tab-label {
+  width: 25% !important;
+  border-bottom: 2px solid;
+  background-color: transparent;
+  color: #3F3838;
+  font-size: 20px;
+  font-weight: 100;
+}
+
+
+/* Styles for the active tab label */
+
+.mat-tab-label.mat-tab-label-active {
+  color: #08c;
+  border-bottom: 2.5px solid;
+}
+
+
+/* Styles for the ink bar */
+
+.mat-ink-bar {
+  background-color: #08c;
+}
+
+.mat-tab-label:hover {
+  color: #076794;
+  border-bottom: 2.5px solid;
+}
+
+.mat-tab-body-content.mat-tab-body-content {
+  /* overflow-y: auto; */
+  overflow-x: hidden !important;
+  /* height: auto; */
+  /* overflow: auto; */
+  margin: 8px!important;
+}
+
+.add-button {
+  color: #fff;
+  padding: 8px 8px;
+  margin-right: 10px;
+  font-size: 18px;
+  line-height: 0.5;
+  border-radius: 4px;
+  background-color: #5cb85c;
+  margin-top: -26px;
+  /* border-color: #5cb85c; */
+  /* box-shadow: 1px 1px 5px #5cb85c !important; */
+  border: none;
+  float: right;
+}
+
+.add-button-employee {
+  color: #fff;
+  width: 80%;
+  margin: 5px;
+  margin-bottom: 5px !important;
+  padding: 2% 2% !important;
+  font-size: 20px !important;
+  line-height: 0.5;
+  border-radius: 4px !important;
+  /* background-color: #5cb85c;
+  border-color: #5cb85c; */
+}
+
+div.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+.modal .modal-dialog {
+  width: 60%;
+  margin: 30px auto;
+}
+
+.modal .modal-dialog-employee {
+  width: 60%;
+  margin: 30px auto;
+}
+
+.modal .modal-map {
+  width: 70% !important;
+}
+
+i {
+  display: inline-block;
+  margin-right: 0.4em;
+}
+
+input[type=checkbox],
+input[type=radio] {
+  margin: 4px 0 0;
+  margin-top: 1px\9;
+  line-height: normal;
+  width: 16px;
+  height: 16px;
+}
+
+.mat-tab-body-content {
+  height: auto !important;
+  overflow: hidden;
+}
+
+.btn-del {
+  margin-right: 40px !important;
+  margin-bottom: 15px !important;
+  float: right;
+}
+
+.service-btn-del {
+  padding: 4px 10px !important;
+  margin-right: 20px !important;
+  margin-top: -27px;
+  font-size: 18px !important;
+  float: right;
+}
+
+.btn-edit {
+  margin-left: 15px !important;
+  margin-bottom: 15px !important;
+}
+
+.modal-content {
+  border-radius: 10px !important;
+}
+
+.lang {
+  margin-top: 15px;
+  width: 80px;
+  border-radius: 5px;
+  background-color: #2eb7b5;
+  border: 0px;
+  color: white;
+}
+
+
+/* .title{
+    color:#8a929e;
+    font-size: 17px !important;
+}
+.title:active{
+    color:#08c;
+} */
+
+.mat-tab-label {
+  /* color:#8a929e; */
+  font-size: 17px !important;
+  width: 150px;
+  letter-spacing: 1px;
+}
+
+.mat-tab-label:hover {
+  color: #B7BCC4 !important;
+}
+
+.table-style {
+  font-size: 15px !important;
+}
+
+.check-box {
+  margin-left: 12px !important;
+}
+
+.mat-tab-body-content {
+  overflow: hidden !important;
+}
+
+.modal-body {
+  padding-top: 0px !important;
+}
+
+.user-field {
+  display: none;
+}
+
+.service-box {
+  height: 65%;
+  max-height: 80% !important;
+}
+
+.custom-list {
+  margin-left: -43px;
+  position: relative;
+  display: block;
+  padding: 10px 10px;
+  margin-bottom: 6px;
+  font-size: 15px;
+  background: #fff;
+  border: 1px solid #e8ebf0;
+  border-radius: 4px;
+}
+
+.active {
+  background-color: #007ACD;
+  color: white;
+}
+
+.list-title {
+  display: inline-block;
+}
+.list-title:hover {
+  color: #076794;
+  font-weight: bold;
+  /* border-bottom: 2.5px solid; */
+}
+.all-services:hover {
+  color: #076794;
+  font-weight: bold;
+}
+
+.show-trash {
+  float: right;
+  color: #B63545;
+  padding-left: 10px;
+}
+
+.show-edit {
+  float: right;
+  color: #007ACD;
+}
+
+.add-btn {
+  width: 100%;
+  margin-top: 5px;
+  padding: 10px !important;
+  color: #5cb85c !important;
+  background-color: transparent !important;
+  border-color: #5cb85c !important;
+}
+
+.panel {
+  margin-bottom: 21px;
+  background-color: #fff;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  padding: 15px 15px !important;
+}
+
+.block-head {
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-family: inherit;
+}
+
+.push-right {
+  float: right;
+  font-size: 16px !important;
+}
+
+.service-group {
+  margin-top: 32px !important;
+  margin-bottom: 21px;
+}
+
+.panel-default {
+  margin-bottom: 0;
+  border-radius: 4px;
+  border-color: #fff !important;
+  background-color: #fff;
+  border: 2px solid transparent;
+}
+
+.panal-heading {
+  color: #3e424a;
+  background-color: #e8ebf0;
+  /* border-color: #e8ebf0; */
+  padding: 15px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  margin-bottom: 10px;
+}
+
+.head-content {
+  display: inline;
+}
+
+.head-title {
+  font-weight: bold;
+  font-size: 15px;
+  padding-left: 45px;
+}
+
+.service-check {
+  float: right;
+}
+
+.icon-pop {
+  margin-left: 10px;
+}
+
+.popover.bottom {
+  margin-top: 18px !important;
+  left: 16px !important;
+}
+
+.hide-field {
+  display: none !important;
+}
+/* todo css */
+.box1 {
+  border: solid 1px #006699;
+  padding: 20px;
+  background: #f3f3f3;
+  border-radius: 5px;
+}
+
+.todos input.textfield {
+  width: 480px;
+  height: 36px;
+  margin-right: 20px;
+  font-size: 1.4em;
+  vertical-align: top;
+}
+
+.todos input.checkbox {
+  width: 20px;
+  height: 20px;
+}
+
+.todos .checked {
+  text-decoration: line-through;
+}
+
+.todo-button {
+  border-color: #b9babe !important;
+  background: #f1f1f1;
+  padding-top: 9px !important;
+  padding-bottom: 9px !important;
+  border-top-right-radius: 9px !important;
+  border-bottom-right-radius: 9px !important;
+}
+
+.todos .delete-icon {
+  display: inline-block;
+  cursor: pointer;
+}
+.todo-list{
+  cursor: pointer;
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  background: #eee;
+  font-size: 18px;
+  transition: 0.2s;
+  height: 20%;
+  overflow-y: auto;
+
+  /* make the list items unselectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.remove-todo{
+  float: right;
+  margin-top: 4px;
+}
+.panel-title{
+  padding: 10px 5px;
+}
+.service-duration{
+  display: inline;
+  padding-left:150px;
+}
+.service-price {
+  display: inline;
+  padding-left:150px;
+}
+.circle{
+  border-radius: 8px;
+  width: 17px;
+  height: 17px;
+}
+/* The container */
+.container-cb {
+  margin-top: 10px;
+  margin-left: 10px;
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  /* font-size: 22px; */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container-cb input {
+  position: absolute;
+  opacity: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 22px;
+  width: 22px;
+  background-color: #B8B8BD;
+}
+
+/* On mouse-over, add a grey background color */
+.container-cb:hover input ~ .checkmark {
+  background-color: #B8B8BD;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container-cb input:checked ~ .checkmark {
+  background-color: #2eb7b5;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container-cb input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container-cb .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.skill-dropdown{
+  position: absolute !important;
+  background-color: rgb(241, 241, 241);
+  z-index: 1;
+  margin-bottom: 7px;
+}

@@ -1,0 +1,14 @@
+<div class="box-body">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="numb">{{"Department"|translate}}</label>
+                <label class="left-pad "> <p *ngIf="Department_Name.invalid && (Department_Name.dirty || Department_Name.touched)" class="text-red">
+                        <span *ngIf="Department_Name.errors.required">{{"Enter Department"|translate}}</span>  
+                    </p>
+                </label>
+                <input (click)="setDepartment()" type="text" name="Department_Name" #Department_Name="ngModel" [(ngModel)]="department.Department_Name" class="form-control" placeholder="Enter department" required/>
+            </div>
+        </div>
+    </div>
+</div>

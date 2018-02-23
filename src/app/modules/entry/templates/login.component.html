@@ -1,0 +1,50 @@
+<body  class="hold-transition login-page">
+    <div class="login-box">
+      <div class="login-logo">
+        <img src="assets/img/pediturk-logo.png" alt="Pediturk Logo">
+        <br/>
+        <!-- <a href="#"><b>Login</b></a>	-->
+      </div>
+      <!-- /.login-logo -->
+      <form #loginForm="ngForm" (submit)="signIn()" >  
+
+      <div class="login-box-body">
+        <p class="login-box-msg">Sign in to start your session</p>
+        <p *ngIf="errMessage" class="login-box-msg text-red">{{errMessage}}</p>
+  
+        <div class="form-group has-feedback">
+            <p *ngIf="strEmail.invalid && (strEmail.dirty || strEmail.touched)" class="text-red">
+                <span *ngIf="strEmail.errors.required">Please enter email.</span>  
+            </p>
+          <input type="email" name="strEmail" #strEmail="ngModel" [(ngModel)]="loginModel.strEmail"  class="form-control" placeholder="Enter email" required />
+          <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+
+        <div class="form-group has-feedback">
+            <p *ngIf="strPassword.invalid && (strPassword.dirty || strPassword.touched)" class="text-red">
+                <span *ngIf="strPassword.errors.required">Please enter password.</span>  
+            </p>
+          <input  name="strPassword"  #strPassword ="ngModel" [(ngModel)]="loginModel.strPassword" type="password" class="form-control" placeholder="Password" required />
+          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="row">
+          <div class="col-xs-8">
+            <a href="#" routerLink="/forgotPassEmail" >I forgot my password</a><br>
+            <a href="#" routerLink="/signup" class="text-center">Register a new membership</a>
+            <a href="#" routerLink="/version" class="text-center">version</a>
+  
+          </div>
+          <!-- /.col -->
+          <div class="col-xs-4">
+            <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary btn-block btn-flat">Sign In</button>
+          </div>
+          <!-- /.col -->
+        </div>
+  
+      </div>
+      <!-- /.login-box-body -->
+    </form>  
+    </div>
+    <!-- /.login-box -->
+  
+  </body>

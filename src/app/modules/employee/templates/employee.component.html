@@ -1,0 +1,42 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            {{"Employee"|translate}}
+            <span *ngIf="successMsg" class="text-green"> {{successMsg}}</span>
+            <span *ngIf="errorMsg" class="text-red"> {{errorMsg}}</span>
+        </h1>
+
+        <!-- <ol class="breadcrumb">
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard"></i>{{"Home"|translate}}</a>
+            </li>
+            <li>
+                <a href="#">{{"Employee"|translate}}</a>
+            </li>
+            <li class="active">{{"Add"|translate}}</li>
+        </ol> -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <!-- Default box -->
+        <div class="box col-md-6 edit-form-style">
+            <div class="box-header with-border">
+            </div>
+            <!-- <form employee="form" (submit)=" editEmployee()" ngNativeValidate> -->
+            <partial-employee [employee]="employee"></partial-employee>
+            <!-- /.box-body -->
+            <!-- <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">{{"Submit"|translate}}</button>
+                </div> -->
+            <!-- /.box-footer-->
+            <!-- </form> -->
+        </div>
+        <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+</div>

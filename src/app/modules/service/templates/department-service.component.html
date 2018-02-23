@@ -1,0 +1,77 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            {{"Department Service"|translate}}
+            <button class="btn btn-success" style="float:right; margin-bottom:1%; margin-right:2%;">Assign</button>
+
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="box" style="padding:10px">
+            <div class="row" style="padding-bottom:10px">
+                <div class="col-md-5">
+                <select class="form-control">
+                    <option value="undefined" disabled="true" selected>Select Department</option>
+                    <option  value="">departments</option><!--there will be binding of departments of branch -->
+                </select>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <li class="list-group-item" style="background-color:#00BEB5; color:#FFFFFF">
+                        Excluded Branch Services
+                    </li>
+                    <div class="list-group" style="overflow-y: auto;height: 70%;">
+                        <li (click)="selectBranchService(service)" [class.active]="service.isSelected" 
+                        *ngFor="let service of branchServices;"  class="list-group-item list-group-item-action">
+                            {{service.Service_Name}}
+                        <span *ngFor="let row of categoryList">
+                            <b *ngIf="row.id === service.service_CatID">
+                                ({{row.Services_Category_Name}})
+                            </b>
+                            </span>
+                        </li>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <ul style="list-style-type: none;">
+                        <li>
+                            <button (click)="pushAllToBranchDepartment()" [disabled]="isMovedLeft" class="btn" style="margin-top:10px; width:50px"> >> </button>
+                        </li>
+                        <li>
+                            <button (click)="pushToBranchDepartment()" class="btn" style="margin-top:10px; width:50px"> > </button>
+                        </li>
+                    
+                        <li>
+                            <button (click)="pushBackToBranchService()" class="btn" style="margin-top:10px; width:50px"> < </button>
+                        </li>
+                        <li>
+                            <button (click)="pushAllBackToBranchService()" [disabled]="isMovedRight" class="btn" style="margin-top:10px; width:50px"> << </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-5">
+                    <li class="list-group-item" style="background-color:#00BEB5; color:#FFFFFF">
+                        Branch Department Services<!--we print here the department name which is selected in dropdown-->
+                    </li>
+                    <div class="list-group" style="overflow-y: auto;height: 70%;">
+                        <li (click)="selectBranchService(service)" [class.active]="service.isSelected"
+                        *ngFor="let service of branchDepartmentServices" class="list-group-item list-group-item-action">
+                            {{service.Service_Name}}
+                            <span *ngFor="let row of categoryList">
+                                <b *ngIf="row.id === service.service_CatID">
+                                    ({{row.Services_Category_Name}})
+                                </b>
+                            </span>
+                        </li>
+                    </div>
+                </div>
+            </div>
+        </div>       
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>

@@ -1,0 +1,215 @@
+<!-- <form>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">Provider:</label>
+        <select class="form-control" name="commitionType" #commitionType  required>
+          <option value="0" selected>--Select --</option>
+          <option value="1">Asad</option>
+          <option value="2">Ali</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">Services:</label>
+        <select class="form-control" name="commitionType" (change)="serviceChange($event.target.value)" #commitionType  required>
+          <option value="0" selected>--Select --</option>
+          <option value="1">Doctoer</option>
+          <option value="2">Teacher</option>
+          <option value="3">Custom</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="customService">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">Custom Servics Name:</label>
+        <input type="text" class="form-control">
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="customService">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">Custom Servics Price:</label>
+        <input type="number" class="form-control" >
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="name">Date:</label>
+        <input type="date" class="form-control" value="{{date}}">
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="name">Services:</label>
+        <select class="form-control" name="commitionType" #commitionType  required>
+          <option value="0" selected>--From --</option>
+          <option value="1">3:45am</option>
+          <option value="2">4:45am</option>
+          <option value="3">5:45am</option>
+          <option value="4">6:45am</option>
+          <option value="5">7:45am</option>
+          <option value="6">8:45am</option>
+          <option value="7">9:45am</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="name">To:</label>
+        <select class="form-control" name="commitionType" #commitionType  required>
+          <option value="0" selected>--To --</option>
+          <option value="1">4:15am</option>
+          <option value="2">5:15am</option>
+          <option value="3">6:15am</option>
+          <option value="4">7:15am</option>
+          <option value="5">8:15am</option>
+          <option value="6">9:15am</option>
+          <option value="7">10:15am</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="fileDataLength > 0">
+    <div class="row" *ngFor="let row of fdList; let i = index">
+      <div class="col-md-6">
+          <a style="color: #0793E8">{{row.name}}</a>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <select class="form-control">
+            <option data-icon="fa fa-clock-o" value="0">Panding</option>
+            <option value="1" selected><i class="fa fa-check">Approved</i></option>
+            <option value="2" ><i class="fa fa-times-circle" >Reject</i></option>
+            <option value="2" ><i class="fa fa-times">Cancelled</i></option>
+          </select>
+        </div>
+    </div>
+    <div class="col-md-1">
+      <span class="text-danger pull-right" style="padding-top: 9px;">
+        <i class="fa fa-trash-o" (click)="removeRecord(row.name, i)"></i>
+      </span>
+    </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="name">Customer:</label>
+        <select [(ngModel)]="editData.customerName"
+                (change)="onChange($event.target.value)"
+                class="form-control" name="commitionType"
+                #commitionType  required
+                style="width: 114%; border-top-right-radius: 0px; border-bottom-right-radius: 0px">
+          <option value="0">--Select --</option>
+          <option [disabled]="selected1" value="Asad">Asad</option>
+          <option [disabled]="selected2" value="Ali">Ali</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="name">New Customer:</label>
+        <button  style="border-bottom-right-radius: 10px; border-top-right-radius: 10px;" class="form-control" (click)="newCustomerModal.show()"  class="btn btn-success btn-block">
+          <i class="fa fa-plus-square-o"></i>{{"New Customer"|translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">Send notifications: <i class="fa fa-question-circle" aria-hidden="true"></i></label>
+        <select class="form-control" name="commitionType" #commitionType  required>
+          <option value="0" selected>--Select --</option>
+          <option value="1">Yes</option>
+          <option value="2">No</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">Internal note: </label>
+        <textarea class="form-control" style="width: 100%;" rows="3" id="adderss"></textarea>
+      </div>
+    </div>
+  </div>
+</form>
+
+<app-modal #newCustomerModal class="modal-map" [customWidth]="95">
+  <div class="app-modal-header">
+      <button type="button" class="close" (click)="newCustomerModal.hide()"><span aria-hidden="true">×</span></button>
+      <div class="modal-title h2">New Customer</div>
+  </div>
+  <div class="app-modal-body">
+    <div class="row">
+      <div class="col-md-12">
+          <div class="form-group">
+            <label for="name">Customer:</label>
+            <select class="form-control" name="commitionType" #commitionType  required>
+              <option value="0" selected>--Select --</option>
+              <option value="1">Asad</option>
+              <option value="2">Ali</option>
+            </select>
+         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" class="form-control" id="Graduation" name="Graduation">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="name">Phone:</label>
+          <input class="form-control" name="commitionType" #commitionType  required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="name">Email:</label>
+          <input type="email" class="form-control" id="Graduation" name="Graduation">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="name">Date of brith:</label>
+          <input type="date" class="form-control" name="commitionType" #commitionType  required>
+        </div>
+      </div>
+    </div>
+    <div class="row" >
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="name">Notes:</label>
+          <textarea class="form-control" style="width: 100%;" rows="3" id="adderss"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-primary" (click)="newCustomerModal.hide()">hide</button>
+  </div>
+</app-modal> -->

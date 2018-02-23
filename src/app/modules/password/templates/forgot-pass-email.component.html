@@ -1,0 +1,42 @@
+<body class="hold-transition login-page">
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="assets/img/pediturk-logo.png" alt="Pediturk Logo">
+      <br/>
+      <!-- <a href="#"><b>Login</b></a>	-->
+    </div>
+    <!-- /.login-logo -->
+    <form #forgetPassForm="ngForm" (submit)="sendRequest()" >    
+    <div class="login-box-body">
+      <p class="login-box-msg">Enter your email address to change password</p>
+      <p *ngIf="errorMsg" class="login-box-msg text-red">{{errorMsg}}</p>
+      <p *ngIf="successMsg" class="login-box-msg">{{successMsg}}</p>      
+
+      <div class="form-group has-feedback">
+          <label> Enter Email</label>
+          <label *ngIf="txtEmail.invalid && (txtEmail.dirty || txtEmail.touched)" class="alert-danger">
+                  <span *ngIf="txtEmail.errors.required">Email is required.</span>  
+              </label>
+              <input type="text" name="txtEmail" #txtEmail="ngModel" [(ngModel)]="forgetPassEmailModel.txtEmail" class="form-control" placeholder="Email Address" required  />      
+        <!-- <input #txtEmail type="text" class="form-control" placeholder="Email Address"> -->
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+      <div class="row">
+        <div class="col-xs-8">
+          <a href="#" routerLink="/login" class="text-center">I remember it</a>
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-4">
+            <button type="submit" [disabled]="forgetPassForm.invalid" class="btn btn-primary">Send</button>    
+          <!-- <button (click)="sendRequest(txtEmail.value)" class="btn btn-primary btn-block btn-flat">Send</button> -->
+        </div>
+        <!-- /.col -->
+      </div>
+
+    </div>
+    <!-- /.login-box-body -->
+  </form>
+  </div>
+  <!-- /.login-box -->
+
+</body>

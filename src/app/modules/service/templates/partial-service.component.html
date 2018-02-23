@@ -1,0 +1,604 @@
+<div class="box-body">
+    <div class="row">
+        <div class="col-md-3">
+            <div (click)="getServiceListOfCompany()" class="custom-list all-services" style="margin-left:-1px">All Services</div>
+            <ul>
+                <li *ngFor="let category of categoryList;" class="custom-list" [ngClass]="">
+                    <div (click)="displayServicesOfCategory(category)" class="list-title">{{category.Services_Category_Name}}</div>
+                    <div (click)="deleteCategory.show(category)" class="glyphicon glyphicon-trash show-trash"></div>
+                    <div (click)="setCategoryModel(category)" [popover]="updatePopover" class="glyphicon glyphicon-edit show-edit"></div>
+                </li>
+                <!-- (click)="setService(serviceItem)" click event of li tag -->
+            </ul>
+            <div>
+                <button type="button" class="btn add-btn" (click)="assignNew()" [popover]="myPopover">
+                    <i class="fa fa-plus-square-o"></i>{{"New Category"|translate}}</button>
+            </div>
+        </div>
+
+        <div class="box-body col-md-9 panel">
+            <h4 class="bolck-head">{{serviceMessage}}
+                <button (click)="newService();" data-toggle="collapse" href="#newCompany" class="btn btn-success push-right">
+                    <i class="fa fa-plus-square-o"></i>{{"New Service"|translate}}
+                </button>
+            </h4>
+            <!--New Company Form Start-->
+            <div id="newCompany" *ngIf="isOpen" class="panel-collapse collapse">
+                <!-- <form> -->
+                <span class="pull-right"> Mode: <input type="checkbox" [checked]="service.checkboxCheck" (change) = "checkTestingMode($event)" > </span>                   
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label for="numb">{{"Service"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <p *ngIf="Service_Name.invalid && (Service_Name.dirty || Service_Name.touched || errors.serviceName)" class="text-red">
+                                {{"Enter Service Name"|translate}}
+                            </p> -->
+                            <input type="text" name="Service_Name" #Service_Name="ngModel" [(ngModel)]="service.Service_Name" class="form-control" placeholder="service name"
+                                required/>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="numb">{{"Color Picker"|translate}}</label>
+                            <!-- <p *ngIf="Color.invalid && (Color.dirty || Color.touched || errors.color)" class="text-red">
+                                {{"Choose Color"|translate}}
+                            </p> -->
+                            <div><input type="color" name="color" #Color="ngModel" [(ngModel)]="service.Color" style="width: 50%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>{{"Catagory"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <p class="text-red" *ngIf="service.service_CatID==0 && errors.serviceCategory">
+                                {{"Select Category"|translate}}
+                            </p> -->
+                            <select class="form-control" [(ngModel)]="service.service_CatID" required>
+                                <option value="undefined" disabled="true" selected>Select Catagory</option>
+                                <option *ngFor="let category of categoryList" value="{{category.id}}">{{category.Services_Category_Name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="numb">{{"Duration"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <p *ngIf="Duration.invalid && (Duration.dirty || Duration.touched || errors.duration)" class="text-red">
+                                {{"Enter Duration"|translate}}
+                            </p> -->
+                            <input type="text" name="Duration" #Duration="ngModel" [(ngModel)]="service.Duration" class="form-control" placeholder="Duration"
+                                required/>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="numb">{{"Capacity"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <p *ngIf="Capacity.invalid && (Capacity.dirty || Capacity.touched || errors.capacity)" class="text-red">
+                                {{"Enter Capacity"|translate}}
+                            </p> -->
+                            <input type="text" name="Capacity" #Capacity="ngModel" [(ngModel)]="service.Capacity" class="form-control" placeholder="Capacity"
+                                required/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="numb">{{"Price"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <p *ngIf="(service.Price == 0 && errors.price)" class="text-red">
+                                {{"Enter Price"|translate}}
+                            </p> -->
+                            <input type="number" min="0" name="Price" #Price="ngModel" [(ngModel)]="service.Price" class="form-control" placeholder="Price" required/>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>{{"Visibility"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <p class="text-red" *ngIf="service.Visibility==0 && errors.visibility">
+                                {{"Select Visibility"|translate}}
+                            </p> -->
+                            <select class="form-control" [(ngModel)]="service.Visibility" required>
+                                <option value="undefined" disabled="true" selected>Select Visibility</option>
+                                <option value="1">Public</option>
+                                <option value="2">Privte</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="numb">{{"Padding Time Before"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <p *ngIf="Padding_Time_Before.invalid && (Padding_Time_Before.dirty || Padding_Time_Before.touched || errors.paddingTimeBefore)"
+                                class="text-red">
+                                {{"Padding Time Before"|translate}}
+                            </p> -->
+                            <input type="time" name="Padding_Time_Before" #Padding_Time_Before="ngModel" [(ngModel)]="service.Padding_Time_Before"
+                                class="form-control" placeholder="Padding Time Before" required/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="numb">{{"Padding Time After"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <p *ngIf="Padding_Time_After.invalid && (Padding_Time_After.dirty || Padding_Time_After.touched || errors.paddingTimeAfter)"
+                                class="text-red">
+                                {{"Padding Time After"|translate}}
+                            </p> -->
+                            <input type="time" name="Padding_Time_After" #Padding_Time_After="ngModel" [(ngModel)]="service.Padding_Time_After" class="form-control"
+                                placeholder="Padding Time After" required/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="numb">{{"Service Providers"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <span *ngIf="(service.Service_Providers==0 && errors.serviceProviders)" class="text-red">
+                                {{"Enter Service Providers"|translate}}
+                            </span> -->
+                            <input type="number" min="0" name="Service_Providers" #Service_Providers="ngModel" [(ngModel)]="service.Service_Providers" class="form-control"
+                                placeholder="Service Providers" required/>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="numb">{{"Status"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <span *ngIf="(service.Status==0 && errors.status)" class="text-red">
+                                {{" Enter Status"|translate}}
+                            </span> -->
+                            <select class="form-control" name="Status" #Status [(ngModel)]="service.Status" required>
+                                <option value="undefined" [disabled]="true">Select Status</option>
+                                <option *ngFor="let status of statuses" value="{{status.id}}">{{status.value}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>{{"Thumbnail"|translate}}</label>
+                            <input type="file" (change)="handleFileSelect($event)" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="numb">{{"Service Commission Type"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <p *ngIf="Service_Commission_Type.invalid && (Service_Commission_Type.dirty || Service_Commission_Type.touched || errors.serviceCommissionType)"
+                                class="text-red">
+                                {{"Service Commission Type"|translate}}
+                            </p> -->
+                            <input type="text" name="Service_Commission_Type" #Service_Commission_Type="ngModel" [(ngModel)]="service.Service_Commission_Type"
+                                class="form-control" placeholder="Service Commission Type" required/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="numb">{{"Service Commission Rate"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <p *ngIf="(service.Service_Commission_Rate==0 && errors.serviceCommissionRate)" class="text-red">
+                                {{"Service Commission Rate"|translate}}
+                            </p> -->
+                            <input type="number" min="0" name="Service_Commission_Rate" #Service_Commission_Rate="ngModel" [(ngModel)]="service.Service_Commission_Rate"
+                                class="form-control" placeholder="Service Commission Rate" required/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                        <div class="form-group">
+                            <label for="numb">{{"Info"|translate}}</label>
+                            <span class="text-red">
+                                <b> *</b>
+                            </span>
+                            <!-- <span *ngIf="Info.invalid && (Info.dirty || Info.touched || errors.info)" class="text-red">
+                                {{"Enter Info"|translate}}
+                            </span> -->
+                            <textarea type="text" name="Info" #Info="ngModel" [(ngModel)]="service.Info" class="form-control" placeholder="Info" required></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                    <button type="button" class="btn btn-success  pull-right" style="margin-bottom: 12px;" (click)="addService()">{{"Save"|translate}}</button>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <!-- <button type="button" class="btn btn-default" >{{"Cancel"|translate}}</button> -->
+                </div>
+                <!-- </form> -->
+            </div>
+            <!--New Company Form End-->
+            <div class="service-group">
+                <!-- Heading Start -->
+                <div class="panel-group">
+                    <div *ngFor="let singleService of services;" class="panel-default">
+                        <div class="panel-heading">
+                            <!-- <h4 class="panel-title form-inline"> -->
+                            <div class="row">
+                                <div class="col-md-1" style="padding-top:10px">
+                                    <p [ngStyle]="{'background-color':singleService.Color, 'color':singleService.Color}" class="circle">o</p>
+                                </div>
+                                <div class="col-md-3" style="padding-top:6px">
+                                    <a (click)="changeService(singleService)" data-toggle="collapse" href="#{{singleService.id}}">
+                                        <b>
+                                            <i class="fa fa-chevron-circle-down icon-pop" aria-hidden="true"></i>
+                                            {{singleService.Service_Name}}
+                                        </b>
+                                    </a>
+                                </div>
+                                <div class="col-md-1">
+                                    <h5>{{singleService.Duration}}</h5>
+                                </div>
+                                <div class="col-md-2">
+                                    <h5>{{singleService.Capacity}}</h5>
+                                </div>
+                                <div class="col-md-2">
+                                    <h5 *ngFor="let status of statuses">
+                                        <span *ngIf="status.id == singleService.Status">
+                                            {{status.value}}
+                                        </span>
+                                    </h5>
+                                </div>
+                                <div class="col-md-2">
+                                    <h5>{{singleService.Price}}$</h5>
+                                </div>
+                                <div class="col-md-1" style="padding-top:6px">
+                                    <input class="check-box" id="checkBox" type="checkbox" [(ngModel)]="singleService.selected">
+                                </div>
+                            </div>
+                            <!-- </h4> -->
+                        </div>
+
+                        <div id="{{singleService.id}}" *ngIf="isOpen" class="panel-collapse collapse">
+                            <div class="panel-body">
+
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="form-group">
+                                            <label for="numb">{{"Service"|translate}}</label>
+                                            <span class="text-red">
+                                                <b> *</b>
+                                            </span>
+                                            <!-- <p *ngIf="Service_Name.invalid && (Service_Name.dirty || Service_Name.touched || errors.serviceName)" class="text-red">
+                                                {{"Enter Service Name"|translate}}
+                                            </p> -->
+                                            <input type="text" name="Service_Name" #Service_Name="ngModel" [(ngModel)]="service.Service_Name" class="form-control" placeholder="service name"
+                                                required/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="numb">{{"Color Picker"|translate}}</label>
+                                            <span class="text-red">
+                                                <b> *</b>
+                                            </span>
+                                            <!-- <p *ngIf="Color.invalid && (Color.dirty || Color.touched || errors.color)" class="text-red">
+                                                {{"Choose Color"|translate}}
+                                            </p> -->
+                                            <input type="color" name="color" #Color="ngModel" [(ngModel)]="service.Color" style="width: 50%;">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>{{"Catagory"|translate}}</label>
+                                            <span class="text-red">
+                                                <b> *</b>
+                                            </span>
+                                            <!-- <p class="text-red" *ngIf="service.service_CatID==0 && errors.serviceCategory">
+                                                {{"Select Category"|translate}}
+                                            </p> -->
+                                            <select class="form-control" [(ngModel)]="service.service_CatID">
+                                                <option value="undefined" disabled="true" selected>Select Catagory</option>
+                                                <option *ngFor="let category of categoryList" value="{{category.id}}">{{category.Services_Category_Name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="numb">{{"Duration"|translate}}</label>
+                                            <span class="text-red">
+                                                <b> *</b>
+                                            </span>
+                                            <!-- <p *ngIf="Duration.invalid && (Duration.dirty || Duration.touched || errors.duration)" class="text-red">
+                                                {{"Enter Duration"|translate}}
+                                            </p> -->
+                                            <input type="text" name="Duration" #Duration="ngModel" [(ngModel)]="service.Duration" class="form-control" placeholder="Duration"
+                                                required/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="numb">{{"Capacity"|translate}}</label>
+                                            <span class="text-red">
+                                                <b> *</b>
+                                            </span>
+                                            <!-- <p *ngIf="Capacity.invalid && (Capacity.dirty || Capacity.touched || errors.capacity)" class="text-red">
+                                                {{"Enter Capacity"|translate}}
+                                            </p> -->
+                                            <input type="text" name="Capacity" #Capacity="ngModel" [(ngModel)]="service.Capacity" class="form-control" placeholder="Capacity"
+                                                required/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="numb">{{"Price"|translate}}</label>
+                                            <span class="text-red">
+                                                <b> *</b>
+                                            </span>
+                                            <!-- <p *ngIf="(service.Price == 0 && errors.price)" class="text-red">
+                                                {{"Enter Price"|translate}}
+                                            </p> -->
+                                            <input type="number" min="0" name="Price" #Price="ngModel" [(ngModel)]="service.Price" class="form-control" placeholder="Price" required/>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>{{"Visibility"|translate}}</label>
+                                            <span class="text-red">
+                                                <b> *</b>
+                                            </span>
+                                            <!-- <p class="text-red" *ngIf="service.Visibility==0 && errors.visibility">
+                                                {{"Select Visibility"|translate}}
+                                            </p> -->
+                                            <select class="form-control" [(ngModel)]="service.Visibility">
+                                                <option value="undefined" disabled="true" selected>Select Visibility</option>
+                                                <option value="1">Public</option>
+                                                <option value="2">Privte</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="numb">{{"Padding Time Before"|translate}}</label>
+                                            <span class="text-red">
+                                                <b> *</b>
+                                            </span>
+                                            <!-- <p *ngIf="Padding_Time_Before.invalid && (Padding_Time_Before.dirty || Padding_Time_Before.touched || errors.paddingTimeBefore)"
+                                                class="text-red">
+                                                {{"Padding Time Before"|translate}}
+                                            </p> -->
+                                            <input type="time" name="Padding_Time_Before" #Padding_Time_Before="ngModel" [(ngModel)]="service.Padding_Time_Before"
+                                                class="form-control" placeholder="Padding Time Before" required/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="numb">{{"Padding Time After"|translate}}</label>
+                                            <span class="text-red">
+                                                <b> *</b>
+                                            </span>
+                                            <!-- <p *ngIf="Padding_Time_After.invalid && (Padding_Time_After.dirty || Padding_Time_After.touched || errors.paddingTimeAfter)"
+                                                class="text-red">
+                                                {{"Padding Time After"|translate}}
+                                            </p> -->
+                                            <input type="time" name="Padding_Time_After" #Padding_Time_After="ngModel" [(ngModel)]="service.Padding_Time_After" class="form-control"
+                                                placeholder="Padding Time After" required/>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="numb">{{"Service Providers"|translate}}</label>
+                                            <span class="text-red">
+                                                <b> *</b>
+                                            </span>
+                                            <!-- <p *ngIf="(service.Service_Providers==0 && errors.serviceProviders)" class="text-red">
+                                                {{"Enter Service Providers"|translate}}
+                                            </p> -->
+                                            <input type="number" min="0" name="Service_Providers" #Service_Providers="ngModel" [(ngModel)]="service.Service_Providers" class="form-control"
+                                                placeholder="Service Providers" required/>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="numb">{{"Status"|translate}}</label>
+                                            <span class="text-red">
+                                                <b> *</b>
+                                            </span>
+                                            <!-- <span *ngIf="(service.Status==0 && errors.status)" class="text-red">
+                                                {{" Enter Status"|translate}}
+                                            </span> -->
+                                            <select class="form-control" name="Status" #Status [(ngModel)]="service.Status" required>
+                                                <option value="undefined" [disabled]="true">Select Status</option>
+                                                <option *ngFor="let status of statuses" value="{{status.id}}">{{status.value}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="numb">{{"Thumbnail"|translate}}</label>
+                                            <input type="file" (change)="handleFileSelect($event)" class="form-control" />
+                                            <p *ngIf="service.Thumbnail">
+                                                <img width="100" src="http://backoffice.istanbul/api/public{{service.Thumbnail}}" alt="Thumbnail">
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="numb">{{"Service Commission Type"|translate}}</label>
+                                            <span class="text-red">
+                                                <b> *</b>
+                                            </span>
+                                            <!-- <p *ngIf="Service_Commission_Type.invalid && (Service_Commission_Type.dirty || Service_Commission_Type.touched || errors.serviceCommissionType)"
+                                                class="text-red">
+                                                {{"Service Commission Type"|translate}}
+                                            </p> -->
+                                            <input type="text" name="Service_Commission_Type" #Service_Commission_Type="ngModel" [(ngModel)]="service.Service_Commission_Type"
+                                                class="form-control" placeholder="Service Commission Type" required/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="numb">{{"Service Commission Rate"|translate}}</label>
+                                            <span class="text-red">
+                                                <b> *</b>
+                                            </span>
+                                            <!-- <p *ngIf="(service.Service_Commission_Rate==0 && errors.serviceCommissionRate)" class="text-red">
+                                                {{"Service Commission Rate"|translate}}
+                                            </p> -->
+                                            <input type="number" min="0" name="Service_Commission_Rate" #Service_Commission_Rate="ngModel" [(ngModel)]="service.Service_Commission_Rate"
+                                                class="form-control" placeholder="Service Commission Rate" required/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-12">
+
+                                        <div class="form-group">
+                                            <label for="numb">{{"Info"|translate}}</label>
+                                            <span class="text-red">
+                                                <b> *</b>
+                                            </span>
+                                            <!-- <span *ngIf="Info.invalid && (Info.dirty || Info.touched || errors.info)" class="text-red">
+                                                {{"Enter Info"|translate}}
+                                            </span> -->
+                                            <textarea type="text" name="Info" #Info="ngModel" [(ngModel)]="service.Info" class="form-control" placeholder="Info" required></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="button" class="btn btn-info pull-right" (click)="editService()">{{"Update"|translate}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <!-- <button type="reset" class="btn btn-default" >{{"Cancel"|translate}}</button> -->
+                            </div>
+                            <!--footer of panel-->
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Heading End -->
+            </div>
+            <a href="javascript:;" (click)="deleteService.show()" class="btn btn-danger pull-right">
+                <span class="fa fa-trash"></span> {{"Delete"|translate}}</a>
+        </div>
+    </div>
+<popover-content #myPopover title="Add Category" placement="bottom" [animation]="true" [closeOnClickOutside]="true">
+            <div class="form-group">
+                <label for="Services_Category_Name">{{"Name"|translate}}</label>
+                <input type="text" name="Services_Category_Name" #Services_Category_Name="ngModel" [(ngModel)]="serviceCategory.Services_Category_Name"
+                    class="form-control" placeholder="Category Name" required/>
+            </div>
+    <div class="">
+        <button type="button" class="btn btn-primary" (click)="addServiceCategory(); isCatSave? myPopover.hide():'' ">{{"Save"|translate}}</button>
+        <button type="button" class="btn btn-default" (click)="myPopover.hide()">{{"Cancel"|translate}}</button>
+    </div>
+</popover-content>
+
+<popover-content #updatePopover title="Update Category" placement="bottom" [animation]="true" [closeOnClickOutside]="true">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="Services_Category_Name">{{"Name"|translate}}</label>
+                <p *ngIf="Services_Category_Name.invalid && (Services_Category_Name.dirty || Services_Category_Name.touched)" class="text-red">
+                    <span *ngIf="Services_Category_Name.errors.required">{{"Enter Category Name"|translate}}</span>
+                </p>
+                <input type="text" name="Services_Category_Name" #Services_Category_Name="ngModel" [(ngModel)]="serviceCategory.Services_Category_Name"
+                    class="form-control" placeholder="Category Name" required/>
+            </div>
+        </div>
+    </div>
+    <div class="">
+        <button type="button" class="btn btn-primary" (click)="editServiceCategory();updatePopover.hide()">{{"Save"|translate}}</button>
+        <button type="button" class="btn btn-default" (click)="updatePopover.hide()">{{"Cancel"|translate}}</button>
+    </div>
+</popover-content>
+
+<app-modal #deleteService>
+    <div class="app-modal-header">
+        <h3>{{"Confirmation"|translate}}</h3>
+    </div>
+    <div class="app-modal-body">
+        {{"Are you sure you want to delete this record ?"|translate}}
+    </div>
+    <div class="app-modal-footer">
+        <button type="button" class="btn btn-primary" (click)="removeService();deleteService.hide()">{{"Yes"|translate}}</button>
+        <button type="button" class="btn btn-default" (click)="deleteService.hide()">{{"No"|translate}}</button>
+    </div>
+</app-modal>
+
+<app-modal #deleteCategory>
+    <div class="app-modal-header">
+        <h3>{{"Confirmation"|translate}}</h3>
+    </div>
+    <div class="app-modal-body">
+        {{"Are you sure you want to delete this category ?"|translate}}
+    </div>
+    <div class="app-modal-footer">
+        <button type="button" class="btn btn-primary" (click)="removeServiceCategory(deleteCategory.passData);deleteCategory.hide()">{{"Yes"|translate}}</button>
+        <button type="button" class="btn btn-default" (click)="deleteCategory.hide()">{{"No"|translate}}</button>
+    </div>
+</app-modal>
+

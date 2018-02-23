@@ -1,0 +1,309 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <span class="heading-xs">{{"Customer"|translate}}</span>
+            <div  class="">
+                <button type="button" class="btn btn-danger service-btn-del">
+                    <i class="fa fa-trash"></i> {{"Delete"|translate}}</button>
+                <button (click)="newCustomerModal.show()" type="button" class="add-button">
+                    <i class="fa fa-plus-square-o"></i> {{"New Customer"|translate}}
+                </button>
+            </div>
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-body">
+                        <table id="tblCompanyData" class="table table-bordered table-striped table-style">
+                            <thead>
+                                <tr>
+                                    <th>Company ID</th>
+                                    <th>Branch ID</th>
+                                    <th>Service</th>
+                                    <th>Service Preferences</th>
+                                    <th>Reference</th>
+                                    <th>Status</th>
+                                    <th>Dependence</th>
+                                    <th>Spouse</th>
+                                    <th>Parent</th>
+                                    <th>Children</th>
+                                    <th>Anniversary</th>
+                                    <th>Customer Type</th>
+                                    <th>Action <input type="checkbox" class="pull-right" id="pe-check-all"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let row of allCustomers; let i = index">
+                                    <td>{{row.companyID}}</td>
+                                    <td>{{row.BranchID}}</td>
+                                    <td>{{row.Service_Required}}</td>
+                                    <td>{{row.Service_Preferences}}</td>
+                                    <td>{{row.Reference}}</td>
+                                    <td>{{row.Status}}</td>
+                                    <td>{{row.Dependence}}</td>
+                                    <td>{{row.Spouse}}</td>
+                                    <td>{{row.Parent}}</td>
+                                    <td>{{row.Children}}</td>
+                                    <td>{{row.Anniversary}}</td>
+                                    <td>{{row.Customer_Type}}</td>
+                                    <td>
+                                        <button type="btn btn-xs pull-left" class="btn btn-default" (click)="onUpdate(row.id); mapModal.show()">
+                                            <i class="glyphicon glyphicon-edit"></i> Edit
+                                        </button>
+                                        <input type="checkbox" class="pull-right">
+                                    </td>
+                                </tr>
+                                {{initTable()}}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Company ID</th>
+                                    <th>Branch ID</th>
+                                    <th>Service</th>
+                                    <th>Service Preferences</th>
+                                    <th>Reference</th>
+                                    <th>Status</th>
+                                    <th>Dependence</th>
+                                    <th>Spouse</th>
+                                    <th>Parent</th>
+                                    <th>Children</th>
+                                    <th>Anniversary</th>
+                                    <th>Customer Type</th>
+                                    <th>Action  <input type="checkbox" class="pull-right" id="pd-check-all"></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </section>
+    <!-- /.Main content -->
+
+
+    <app-modal #mapModal class="modal-map">
+        <div class="app-modal-header">
+            {{"Add New Customer"|translate}}
+            <span class="pull-right">
+                Testing Mode: <input type="checkbox" [checked]= "checkboxFalse" (change)="testingModeON($event)">
+            </span>
+        </div>
+        <div class="app-modal-body">
+            <div class="box-body">
+                <form [formGroup]="appCustomerFrom">
+                    <!-- <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                            <label for="name">Select Customer:</label>
+                            <select 
+                             class="form-control" name="customerName"
+                                required
+                                style="width: 114%; border-top-right-radius: 0px; border-bottom-right-radius: 0px">
+                                <option value="0">--Select --</option>
+                                <option *ngFor="let row of showAllUsers" value="{{row.id}}">{{row.First_Name + ' ' + row.Last_Name}}</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                            <label for="name">New Customer:</label>
+                            <button  style="border-bottom-right-radius: 10px; border-top-right-radius: 10px;" class="form-control" (click)="newCustomerModal.show()"  class="btn btn-success btn-block">
+                                <i class="fa fa-plus-square-o"></i>{{"New Customer"|translate}}
+                            </button>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Service:</label>
+                            <span class="text-red">
+                            <b> *</b>
+                            </span>
+                            <input type="text" class="form-control" id="Service_Required" required name="Service_Required" formControlName="Service_Required">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Service Preferences:</label>
+                            <span class="text-red">
+                            <b> *</b>
+                            </span>
+                            <input type="text" class="form-control" id="Service_Preferences" required name="Service_Preferences" formControlName="Service_Preferences">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Reference:</label>
+                            <span class="text-red">
+                            <b> *</b>
+                            </span>
+                            <input type="text" class="form-control" id="Reference" required name="Reference" formControlName="Reference">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Status:</label>
+                            <span class="text-red">
+                            <b> *</b>
+                            </span>
+                            <input type="text" class="form-control" id="Status" required name="Status" formControlName="Status">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Dependence:</label>
+                            <span class="text-red">
+                            <b> *</b>
+                            </span>
+                            <input type="text" class="form-control" id="Dependence" required name="Dependence" formControlName="Dependence">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Spouse:</label>
+                            <span class="text-red">
+                            <b> *</b>
+                            </span>
+                            <input type="text" class="form-control" id="Spouse" required name="Spouse" formControlName="Spouse">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Parent:</label>
+                            <span class="text-red">
+                            <b> *</b>
+                            </span>
+                            <input type="text" class="form-control" id="Parent" required name="Parent" formControlName="Parent">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Children:</label>
+                            <span class="text-red">
+                            <b> *</b>
+                            </span>
+                            <input type="text" class="form-control" id="Children" required name="Children" formControlName="Children">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Anniversary:</label>
+                            <span class="text-red">
+                            <b> *</b>
+                            </span>
+                            <input type="text" class="form-control" id="Anniversary" required name="Anniversary" formControlName="Anniversary">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Customer Type:</label>
+                            <span class="text-red">
+                            <b> *</b>
+                            </span>
+                            <input type="text" class="form-control" id="Customer_Type" required name="Customer_Type" formControlName="Customer_Type">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="app-modal-footer">
+            <button class="btn btn-success" (click)="onSubmit();mapModal.hide()">{{"Save"|translate}}</button>
+            <button class="btn btn-primary" (click)="mapModal.hide()">{{"Cancel"|translate}}</button>
+        </div>
+    </app-modal>
+
+    <app-modal #newCustomerModal class="modal-map" [customWidth]="35">
+            <div class="app-modal-header">
+              <span class="pull-right">
+                Testing Mode: <input type="checkbox" [checked]= "checkboxFalse" (change)="testingModeON($event)">
+            </span>
+              <div class="modal-title h2">New Customer</div>
+            </div>
+            <div class="app-modal-body">
+              <form>
+                  <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                        <label for="name">Select Reference:</label>
+                        <select class="form-control" name="customerName" [(ngModel)]="editData.userID"
+                            required
+                           >
+                            <option value="0">--Select --</option>
+                            <option *ngFor="let row of showDoctor" value="{{row.id}}">{{row.First_Name + ' ' + row.Last_Name}}</option>
+                        </select>
+                        </div>
+                    </div>
+                  </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="name">Name:</label>
+                      <input type="text" class="form-control" required  name="customCustomerName" [(ngModel)]="editData.customCustomerName">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                        <label for="name">National ID:</label>
+                        <input type="number" class="form-control" required name="National_ID" [(ngModel)]="editData.National_ID">
+                        </div>
+                    </div>
+                    </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                        <label for="name">Sex:</label>
+                        <select class="form-control" name="Sex" [(ngModel)]="editData.Sex"
+                            required
+                           >
+                            <option value="0">--Select --</option>
+                            <option value="1">Male</option>
+                            <option value="2">Fe-Male</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Phone:</label>
+                            <input class="form-control"  name="customCustomerPhone"  required type="number" [(ngModel)]="editData.customCustomerPhone" >
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name">Email:</label>
+                      <input type="email" class="form-control" required name="customCustomerEmail"  [(ngModel)]="editData.customCustomerEmail">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="name">Date of brith:</label>
+                          <input type="date" class="form-control"  [(ngModel)]="editData.customCustomerBrith" name="customCustomerBrith"   required>
+                        </div>
+                      </div>
+                </div>
+                <div class="row" >
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="name">Notes:</label>
+                    <textarea class="form-control" style="width: 100%;" rows="3" [(ngModel)]="editData.notes" name="notes"  id="adderss"></textarea>
+                  </div>
+                </div>
+              </div>
+              </form>
+            </div>
+            <div class="app-modal-footer">
+                <button class="btn btn-success" (click)="onSubmit();newCustomerModal.hide()">{{"Save"|translate}}</button>
+              <button type="button" class="btn btn-primary" (click)="clearData();newCustomerModal.hide()">hide</button>
+            </div>
+          </app-modal>
+
+
+</div>

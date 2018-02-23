@@ -1,0 +1,62 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            {{"Department"|translate}}
+            <button (click)="addDepartmentToBranch()" class="btn btn-success" style="float:right; margin-bottom:1%; margin-right:2%;">Assign</button>            
+        </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <!-- Default box -->
+        <div class="box" style="padding:10px">
+            <div class="row">
+                <div class="col-md-5">
+                    <li class="list-group-item" style="background-color:#00BEB5; color:#FFFFFF">
+                        Excluded Departments
+                    </li>
+                    <div class="list-group" style="overflow-y: auto;height: 70%;">
+                        <li (click)="selectDepartment(department)" [class.active]="department.isSelected" *ngFor="let department of departments;" class="list-group-item list-group-item-action">
+                            {{department.Department_Name}}
+                        </li>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <ul style="list-style-type: none;">
+                        <li>
+                            <button (click)="pushAllToBranch()" [disabled]="isMovedLeft" class="btn" style="margin-top:10px; width:50px"> >> </button>
+                        </li>
+                        <li>
+                            <button (click)="pushToBranch()" class="btn" style="margin-top:10px; width:50px"> > </button>
+                        </li>
+
+                        <li>
+                            <button (click)="pushBackToDepartment()" class="btn" style="margin-top:10px; width:50px">
+                                < </button>
+                        </li>
+                        <li>
+                            <button (click)="pushAllBackToDepartment()" [disabled]="isMovedRight" class="btn" style="margin-top:10px; width:50px">
+                                << </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-5">
+                    <li class="list-group-item" style="background-color:#00BEB5; color:#FFFFFF">
+                        Branch Departments
+                    </li>
+                    <div class="list-group" style="overflow-y: auto;height: 70%;">
+                        <li (click)="selectBranchDepartment(department)" [class.active]="department.isSelected" *ngFor="let department of branchDepartments" class="list-group-item list-group-item-action">
+                            <!-- {{department.Department_Name}} -->
+                                {{department.Department_Name}}
+                        </li>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+</div>

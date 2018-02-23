@@ -1,0 +1,483 @@
+<div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                {{"Available Timing"|translate}}
+            </h1>
+        </section>
+    <div class="box-body ">
+            <div class="col-md-4">
+                <ul>
+                <li style="cursor: pointer" *ngFor="let row of employeeList" [class.active]="row.id == employeeActive" [class.liDisabled]="row.id == employeeActive"
+                    class="disabled" class="custom-list" (click) = "changeView(row)">
+                    <div class="list-title">{{row.First_Name +' '+ row.Last_Name}}</div>
+                </li>
+                </ul>
+            </div>
+            <div class="col-md-8">
+                <div class="panel-body" style="background-color: #FFFFFF">
+                    <mat-tab-group mat-tab-body-content>
+                        <i class="fa fa-info-circle"></i>
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                            <mat-icon>
+                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            </mat-icon> {{"Schedule"|translate}}
+                            </ng-template>
+                            <div class="row">
+                                <div class="well">Monday</div>
+                                <form>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                          <label for="name">Start Timing:</label>
+                                          <select class="form-control" name="start_time1" [(ngModel)]="start_time1">
+                                              <option value="0">--Select--</option>
+                                              <option value="4AM">4AM</option>
+                                              <option value="6AM">6AM</option>
+                                              <option value="8AM">8AM</option>
+                                              <option value="10AM">10AM</option>
+                                              <option value="12PM">12PM</option>
+                                              <option value="2PM">2PM</option>
+                                              <option value="4PM">4PM</option>
+                                              <option value="4PM">6PM</option>
+                                              <option value="8PM">8PM</option>
+                                              <option value="10PM">10PM</option>
+                                            </select>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-3">
+                                          <div class="form-group">
+                                            <label for="name">End Timing:</label>
+                                            <select class="form-control" [(ngModel)]="end_time1" name="end_time1">
+                                                <option value="0">--Select--</option>                        
+                                                <option value="5AM">5AM</option>
+                                                <option value="7AM">7AM</option>
+                                                <option value="9AM">9AM</option>
+                                                <option value="11AM">11AM</option>
+                                                <option value="1PM">1PM</option>
+                                                <option value="3PM">3PM</option>
+                                                <option value="5PM">5PM</option>
+                                                <option value="7PM">7PM</option>
+                                                <option value="9PM">9PM</option>
+                                                <option value="11PM">11PM</option>
+                                              </select>
+                                          </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="form-group">
+                                                <button style="margin-top: 50%;" (click)="addTimimg(1)" class="btn btn-xs btn-success"> Add </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" *ngIf="checkShow != -1">
+                                            <table class="table">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                    <th scope="col">Start Time</th>
+                                                    <th scope="col">End Time</th>
+                                                    <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let row of docTimingData1; let i=index">
+                                                        <td>{{row.start_time}}</td>
+                                                        <td>{{row.end_time}}</td>
+                                                        <td (click)="removeTimimg(i, row.Week_Days)"><i class="fa fa-trash" aria-hidden="true"></i> </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>    
+                                        </div>
+                                    </form>
+                            </div>
+                            <div class="row">
+                                <div class="well">Tuesday</div>
+                                <form>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="name">Start Timing:</label>
+                                            <select class="form-control" name="start_time2" [(ngModel)]="start_time2">
+                                                <option value="0">--Select--</option>
+                                                <option value="4AM">4AM</option>
+                                                <option value="6AM">6AM</option>
+                                                <option value="8AM">8AM</option>
+                                                <option value="10AM">10AM</option>
+                                                <option value="12PM">12PM</option>
+                                                <option value="2PM">2PM</option>
+                                                <option value="4PM">4PM</option>
+                                                <option value="4PM">6PM</option>
+                                                <option value="8PM">8PM</option>
+                                                <option value="10PM">10PM</option>
+                                            </select>
+                                        </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                            <label for="name">End Timing:</label>
+                                            <select class="form-control" [(ngModel)]="end_time2" name="end_time2">
+                                                <option value="0">--Select--</option>                        
+                                                <option value="5AM">5AM</option>
+                                                <option value="7AM">7AM</option>
+                                                <option value="9AM">9AM</option>
+                                                <option value="11AM">11AM</option>
+                                                <option value="1PM">1PM</option>
+                                                <option value="3PM">3PM</option>
+                                                <option value="5PM">5PM</option>
+                                                <option value="7PM">7PM</option>
+                                                <option value="9PM">9PM</option>
+                                                <option value="11PM">11PM</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    
+                                    <div class="col-md-1">
+                                            <div class="form-group">
+                                                <button style="margin-top: 50%;" (click)="addTimimg(2)" class="btn btn-xs btn-success"> Add </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" *ngIf="checkShow2 != -1">
+                                            <table class="table">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                    <th scope="col">Start Time</th>
+                                                    <th scope="col">End Time</th>
+                                                    <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let row of docTimingData2; let i=index">
+                                                        <td>{{row.start_time}}</td>
+                                                        <td>{{row.end_time}}</td>
+                                                        <td (click)="removeTimimg(i, row.Week_Days)"><i class="fa fa-trash" aria-hidden="true"></i> </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>    
+                                        </div>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <div class="well">Wednesday</div>
+                                <form>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="name">Start Timing:</label>
+                                            <select class="form-control" name="start_time3" [(ngModel)]="start_time3">
+                                                <option value="0">--Select--</option>
+                                                <option value="4AM">4AM</option>
+                                                <option value="6AM">6AM</option>
+                                                <option value="8AM">8AM</option>
+                                                <option value="10AM">10AM</option>
+                                                <option value="12PM">12PM</option>
+                                                <option value="2PM">2PM</option>
+                                                <option value="4PM">4PM</option>
+                                                <option value="4PM">6PM</option>
+                                                <option value="8PM">8PM</option>
+                                                <option value="10PM">10PM</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                        <label for="name">End Timing:</label>
+                                        <select class="form-control" [(ngModel)]="end_time3" name="end_time3">
+                                            <option value="0">--Select--</option>                        
+                                            <option value="5AM">5AM</option>
+                                            <option value="7AM">7AM</option>
+                                            <option value="9AM">9AM</option>
+                                            <option value="11AM">11AM</option>
+                                            <option value="1PM">1PM</option>
+                                            <option value="3PM">3PM</option>
+                                            <option value="5PM">5PM</option>
+                                            <option value="7PM">7PM</option>
+                                            <option value="9PM">9PM</option>
+                                            <option value="11PM">11PM</option>
+                                            </select>
+                                        </div>
+                                    </div>        
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <button style="margin-top: 50%;" (click)="addTimimg(3)" class="btn btn-xs btn-success"> Add </button>
+                                        </div>
+                                    </div>
+                                        <div class="col-md-4" *ngIf="checkShow3 != -1">
+                                            <table class="table">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                    <th scope="col">Start Time</th>
+                                                    <th scope="col">End Time</th>
+                                                    <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let row of docTimingData3; let i=index">
+                                                        <td>{{row.start_time}}</td>
+                                                        <td>{{row.end_time}}</td>
+                                                        <td (click)="removeTimimg(i, row.Week_Days)"><i class="fa fa-trash" aria-hidden="true"></i> </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>    
+                                        </div>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <div class="well">Thursday</div>
+                             <form>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="name">Start Timing:</label>
+                                        <select class="form-control" name="start_time4" [(ngModel)]="start_time4">
+                                            <option value="0">--Select--</option>
+                                            <option value="4AM">4AM</option>
+                                            <option value="6AM">6AM</option>
+                                            <option value="8AM">8AM</option>
+                                            <option value="10AM">10AM</option>
+                                            <option value="12PM">12PM</option>
+                                            <option value="2PM">2PM</option>
+                                            <option value="4PM">4PM</option>
+                                            <option value="4PM">6PM</option>
+                                            <option value="8PM">8PM</option>
+                                            <option value="10PM">10PM</option>
+                                        </select>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                        <label for="name">End Timing:</label>
+                                        <select class="form-control" [(ngModel)]="end_time4" name="end_time4">
+                                            <option value="0">--Select--</option>                        
+                                            <option value="5AM">5AM</option>
+                                            <option value="7AM">7AM</option>
+                                            <option value="9AM">9AM</option>
+                                            <option value="11AM">11AM</option>
+                                            <option value="1PM">1PM</option>
+                                            <option value="3PM">3PM</option>
+                                            <option value="5PM">5PM</option>
+                                            <option value="7PM">7PM</option>
+                                            <option value="9PM">9PM</option>
+                                            <option value="11PM">11PM</option>
+                                            </select>
+                                        </div>
+                                    </div>     
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <button style="margin-top: 50%;" (click)="addTimimg(4)" class="btn btn-xs btn-success"> Add </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" *ngIf="checkShow4 != -1">
+                                    <table class="table">
+                                        <thead class="thead-light">
+                                            <tr>
+                                            <th scope="col">Start Time</th>
+                                             <th scope="col">End Time</th>
+                                            <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let row of docTimingData4; let i=index">
+                                                <td>{{row.start_time}}</td>
+                                                <td>{{row.end_time}}</td>
+                                                <td (click)="removeTimimg(i, row.Week_Days)"><i class="fa fa-trash" aria-hidden="true"></i> </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>    
+                                </div>
+                                </form>
+                                </div>
+                            <div class="row">
+                                <div class="well">Friday</div>
+                                <form>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="name">Start Timing:</label>
+                                            <select class="form-control" name="start_time5" [(ngModel)]="start_time5">
+                                                <option value="0">--Select--</option>
+                                                <option value="4AM">4AM</option>
+                                                <option value="6AM">6AM</option>
+                                                <option value="8AM">8AM</option>
+                                                <option value="10AM">10AM</option>
+                                                <option value="12PM">12PM</option>
+                                                <option value="2PM">2PM</option>
+                                                <option value="4PM">4PM</option>
+                                                <option value="4PM">6PM</option>
+                                                <option value="8PM">8PM</option>
+                                                <option value="10PM">10PM</option>
+                                            </select>
+                                        </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                            <label for="name">End Timing:</label>
+                                            <select class="form-control" [(ngModel)]="end_time5" name="end_time5">
+                                                <option value="0">--Select--</option>                        
+                                                <option value="5AM">5AM</option>
+                                                <option value="7AM">7AM</option>
+                                                <option value="9AM">9AM</option>
+                                                <option value="11AM">11AM</option>
+                                                <option value="1PM">1PM</option>
+                                                <option value="3PM">3PM</option>
+                                                <option value="5PM">5PM</option>
+                                                <option value="7PM">7PM</option>
+                                                <option value="9PM">9PM</option>
+                                                <option value="11PM">11PM</option>
+                                                </select>
+                                            </div>
+                                        </div>        
+                                        <div class="col-md-1">
+                                            <div class="form-group">
+                                                <button style="margin-top: 50%;" (click)="addTimimg(5)" class="btn btn-xs btn-success"> Add </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" *ngIf="checkShow5 != -1">
+                                            <table class="table">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                    <th scope="col">Start Time</th>
+                                                    <th scope="col">End Time</th>
+                                                    <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let row of docTimingData5; let i=index">
+                                                        <td>{{row.start_time}}</td>
+                                                        <td>{{row.end_time}}</td>
+                                                        <td (click)="removeTimimg(i, row.Week_Days)"><i class="fa fa-trash" aria-hidden="true"></i> </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>    
+                                        </div>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <div class="well">Saturday</div>
+                                <form>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="name">Start Timing:</label>
+                                            <select class="form-control" name="start_time6" [(ngModel)]="start_time6">
+                                                <option value="0">--Select--</option>
+                                                <option value="4AM">4AM</option>
+                                                <option value="6AM">6AM</option>
+                                                <option value="8AM">8AM</option>
+                                                <option value="10AM">10AM</option>
+                                                <option value="12PM">12PM</option>
+                                                <option value="2PM">2PM</option>
+                                                <option value="4PM">4PM</option>
+                                                <option value="4PM">6PM</option>
+                                                <option value="8PM">8PM</option>
+                                                <option value="10PM">10PM</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                        <label for="name">End Timing:</label>
+                                        <select class="form-control" [(ngModel)]="end_time6" name="end_time6">
+                                            <option value="0">--Select--</option>                        
+                                            <option value="5AM">5AM</option>
+                                            <option value="7AM">7AM</option>
+                                            <option value="9AM">9AM</option>
+                                            <option value="11AM">11AM</option>
+                                            <option value="1PM">1PM</option>
+                                            <option value="3PM">3PM</option>
+                                            <option value="5PM">5PM</option>
+                                            <option value="7PM">7PM</option>
+                                            <option value="9PM">9PM</option>
+                                            <option value="11PM">11PM</option>
+                                            </select>
+                                        </div>
+                                    </div>        
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <button style="margin-top: 50%;" (click)="addTimimg(6)" class="btn btn-xs btn-success"> Add </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="checkShow6 != -1">
+                                        <table class="table">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                <th scope="col">Start Time</th>
+                                                <th scope="col">End Time</th>
+                                                <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let row of docTimingData6; let i=index">
+                                                    <td>{{row.start_time}}</td>
+                                                    <td>{{row.end_time}}</td>
+                                                    <td (click)="removeTimimg(i, row.Week_Days)"><i class="fa fa-trash" aria-hidden="true"></i> </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>    
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <div class="well">Sunday</div>
+                                <form>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="name">Start Timing:</label>
+                                            <select class="form-control" name="start_time7" [(ngModel)]="start_time7">
+                                                <option value="0">--Select--</option>
+                                                <option value="4AM">4AM</option>
+                                                <option value="6AM">6AM</option>
+                                                <option value="8AM">8AM</option>
+                                                <option value="10AM">10AM</option>
+                                                <option value="12PM">12PM</option>
+                                                <option value="2PM">2PM</option>
+                                                <option value="4PM">4PM</option>
+                                                <option value="4PM">6PM</option>
+                                                <option value="8PM">8PM</option>
+                                                <option value="10PM">10PM</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                        <label for="name">End Timing:</label>
+                                        <select class="form-control" [(ngModel)]="end_time7" name="end_time7">
+                                            <option value="0">--Select--</option>                        
+                                            <option value="5AM">5AM</option>
+                                            <option value="7AM">7AM</option>
+                                            <option value="9AM">9AM</option>
+                                            <option value="11AM">11AM</option>
+                                            <option value="1PM">1PM</option>
+                                            <option value="3PM">3PM</option>
+                                            <option value="5PM">5PM</option>
+                                            <option value="7PM">7PM</option>
+                                            <option value="9PM">9PM</option>
+                                            <option value="11PM">11PM</option>
+                                            </select>
+                                        </div>
+                                    </div>  
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <button style="margin-top: 50%;" (click)="addTimimg(7)" class="btn btn-xs btn-success"> Add </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="checkShow7 != -1">
+                                        <table class="table">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                <th scope="col">Start Time</th>
+                                                <th scope="col">End Time</th>
+                                                <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let row of docTimingData7; let i=index">
+                                                    <td>{{row.start_time}}</td>
+                                                    <td>{{row.end_time}}</td>
+                                                    <td (click)="removeTimimg(i, row.Week_Days)"><i class="fa fa-trash" aria-hidden="true"></i> </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>    
+                                    </div>
+                                </form>
+                            </div>
+                            <button class="btn btn-success pull-right" (click)="onSubmit()">Save</button> 
+                        </mat-tab>
+                    </mat-tab-group>            
+                </div>
+            </div>
+    </div>
+
+</div>

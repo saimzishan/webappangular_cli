@@ -1,0 +1,156 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <span class="heading-xs">{{"Company"|translate}}</span>
+            <div *ngIf="isSuperAdmin()" class="">
+                <button type="button" (click)="deleteModal.show()" class="btn btn-danger service-btn-del">
+                    <i class="fa fa-trash"></i> {{"Delete"|translate}}</button>
+                <button type="button" class="add-button" (click)="newCompany();addModal.show()">
+                    <i class="fa fa-plus-square-o"></i> {{"New Company"|translate}}</button>
+            </div>
+        </h1>
+        <!-- <ol class=""> -->
+
+        <!-- </ol> -->
+    </section>
+
+
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="box">
+                    <div class="box-body">
+                        <table id="tblCompanyData" class="table table-bordered table-striped table-style">
+                            <thead>
+                                <tr>
+                                    <th>{{"Name"|translate}} </th>
+                                    <th>{{"Company Type"|translate}} </th>
+                                    <th>{{"Subscription Type"|translate}} </th>
+                                    <th style="width:131px !important; text-align: center;">{{"Software Modules Subscribed"|translate}} </th>
+                                    <th>{{"Status"|translate}}</th>
+                                    <th>{{"City"|translate}}</th>
+                                    <th>{{"Action"|translate}}
+                                        <input *ngIf="isSuperAdmin()" (click)="checkAll()" style="margin-left: 39px" id="checkBox" type="checkbox">
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody *ngIf="isSuperAdmin()">
+                                <tr *ngFor="let companyItem of companies; let last = last">
+                                    <td>{{companyItem.companyData.Company_Name}}</td>
+                                    <td>{{findComapnyType(companyItem.companyData.Company_Type)}}</td>
+                                    <td>{{findSubscriptionType(companyItem.companyData.SubscriptionID)}}</td>
+                                    <td>{{companyItem.companyData.Software_Services_Level}}</td>
+                                    <td>{{findStatus(companyItem.companyData.Status)}}</td>
+                                    <td>{{companyItem.companyData.City}}</td>
+                                    <td>
+                                        <button type="button" (click)="changeCompany(companyItem);editModal.show()" class="btn btn-default">
+                                            <i class="glyphicon glyphicon-edit"></i> Edit</button>
+                                        <input [checked]="checkedBox" class="check-box" id="checkBox" type="checkbox" [(ngModel)]="companyItem.companyData.selected">
+                                        <!-- <button> <i (click)="modal.show(companyItem.id)" class="fa fa-trash text-red"></i> </button> -->
+                                    </td>
+                                    {{last ? initTable() : ''}}
+                                </tr>
+                            </tbody>
+                            <tbody *ngIf="!isSuperAdmin()">
+                                <tr>
+                                        <td>{{oneCompany.Company_Name}}</td>
+                                        <td>{{oneCompany.Company_Type}}</td>
+                                        <td>{{oneCompany.SubscriptionID}}</td>
+                                        <td>{{oneCompany.Software_Services_Level}}</td>
+                                        <td>{{oneCompany.Status}}</td>
+                                        <td>{{oneCompany.City}}</td>
+                                    <td>
+                                        <button type="button" (click)="changeCompany(singlecompany);editModal.show()" class="btn btn-default">
+                                            <i class="glyphicon glyphicon-edit"></i> Edit</button>
+                                        <!-- <a href="javascript:;"> <i  class="fa fa-pencil text-aqua"></i> </a> -->
+                                        <!-- <button> <i (click)="modal.show(singlecomapany.id)" class="fa fa-trash text-red"></i> </button> -->
+                                        <!-- <input [checked]="checkedBox" class="check-box" id="checkBox" type="checkbox"> -->
+                                    </td>
+                                    {{ initTable() }}
+                                </tr>
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>{{"Name"|translate}} </th>
+                                    <th>{{"Company Type"|translate}} </th>
+                                    <th>{{"Subscription Type"|translate}} </th>
+                                    <th style="width:120px !important; text-align: center;">{{"Software Modules Subscribed"|translate}} </th>
+                                    <th>{{"Status"|translate}}</th>
+                                    <th>{{"City"|translate}}</th>
+                                    <th>{{"Action"|translate}} </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+
+<app-modal #deleteModal>
+    <div class="app-modal-header">
+        {{"Confirmation"|translate}}
+    </div>
+    <div class="app-modal-body">
+        {{"Are you sure you want to delete this record ?"|translate}}
+    </div>
+    <div class="app-modal-footer">
+        <button type="button" class="btn btn-primary" (click)="deleteCompany();deleteModal.hide()">{{"Yes"|translate}}</button>
+        <button type="button" class="btn btn-default" (click)="deleteModal.hide()">{{"No"|translate}}</button>
+    </div>
+</app-modal>
+
+<app-modal #editModal class="show-Emplyee-form-style">
+
+    <div class="app-modal-header">
+        <strong>Update</strong>
+    </div>
+    <div class="app-modal-body show-Emplyee-form-style">
+        <partial-company [isAdded]="false" [errors]="mesg" [company]="company" #partialCompanyForm = "partialCompanyForm"></partial-company>
+    </div>
+    <div class="app-modal-footer">
+        <button type="button" class="btn btn-primary" (click)="editCompany(); isSave? editModal.hide():''">{{"Save"|translate}}</button>
+        <button type="button" class="btn btn-default" (click)="destroyData();editModal.hide()">{{"Cancel"|translate}}</button>
+    </div>
+
+</app-modal>
+
+
+<app-modal #addModal>
+<!-- <form #myForm="ngForm"> -->
+<div class="app-modal-header">
+    <h3> {{"Add Company"|translate}} </h3>
+</div>
+<div class="app-modal-body show-Emplyee-form-style">
+    <partial-company  [isAdded]="true" [errors]="mesg" [company]="company" #partialCompanyForm="partialCompanyForm"></partial-company>
+</div>
+<div class="app-modal-footer">
+    <div style="display:inline;font-style:italic;float:left;">
+        <p><span class="text-red"><b> *</b></span>Mandatory Fields</p>
+    </div>
+    <div class="form-inline">
+        <div class="form-group" *ngIf="partialCompanyForm.company.currentTabIndex == 2">
+            <button class="btn btn-primary" (click)="addCompany(); isSave? addModal.hide():''">{{"Save"|translate}}</button>
+        </div>
+        <div class="form-group" *ngIf="partialCompanyForm.company.currentTabIndex != 2">
+            <button  type="button" class="btn btn-info" (click)="partialCompanyForm.onLinkClick(partialCompanyForm.company.currentTabIndex)">{{"Next"|translate}}</button>
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-default" (click)="addModal.hide()">{{"Cancel"|translate}}</button>
+        </div>
+    </div>
+</div>
+<!-- </form> -->
+</app-modal>

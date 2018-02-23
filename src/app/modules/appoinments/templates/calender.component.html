@@ -1,0 +1,290 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+      Appointment View
+      <small>it all starts here</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href=""><i class="fa fa-dashboard"></i>Home</a></li>
+      <li><a href="">Appointment</a></li>
+      <li class="active">View</li>
+    </ol>
+  </section>
+  <br>
+  <br>
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div
+          class="btn btn-primary"
+          mwlCalendarPreviousView
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="activeDayIsOpen = false">
+          Previous
+        </div>
+        <div
+          class="btn btn-outline-secondary"
+          mwlCalendarToday
+          [(viewDate)]="viewDate">
+          Today
+        </div>
+        <div
+          class="btn btn-primary"
+          mwlCalendarNextView
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="activeDayIsOpen = false">
+          Next
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+    </div>
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div
+          class="btn btn-primary"
+          (click)="view = 'month'"
+          [class.active]="view === 'month'">
+          Month
+        </div>
+        <div
+          class="btn btn-primary"
+          (click)="view = 'week'"
+          [class.active]="view === 'week'">
+          Week
+        </div>
+        <div
+          class="btn btn-primary"
+          (click)="view = 'day'"
+          [class.active]="view === 'day'">
+          Day
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <div [ngSwitch]="view">
+    <mwl-calendar-month-view
+      *ngSwitchCase="'month'"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      [activeDayIsOpen]="activeDayIsOpen"
+      (dayClicked)="dayClicked($event.day);editModal.show(); "
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)">
+    </mwl-calendar-month-view>
+    <mwl-calendar-week-view
+      *ngSwitchCase="'week'"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)">
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view
+      *ngSwitchCase="'day'"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)">
+    </mwl-calendar-day-view>
+  </div>
+
+
+  <app-modal #editModal class="modal-map" [customWidth]="30">
+    <div class="app-modal-header">
+      <div *ngIf="sndEvent">
+        <button type="button" class="close" (click)="editModal.hide()"><span aria-hidden="true">×</span></button>
+        <div class="modal-title h2">Edit appointment</div>
+      </div>
+      <div *ngIf="!sndEvent">
+        <button type="button" class="close" (click)="editModal.hide()"><span aria-hidden="true">×</span></button>
+        <div class="modal-title h2">New appointment</div>
+      </div>
+    </div>
+    <div class="app-modal-body">
+      <div *ngIf="sndEvent">
+        <h1>Some forms</h1>
+      </div>
+      <div *ngIf="!sndEvent">
+        <form>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="name">Provider:</label>
+                <select class="form-control" name="docID" (change)="getEmployesServices_Against_Emp_ID($event.target.value)"  required [(ngModel)]="editData.docID">
+                  <option *ngFor="let row of allSpecialist" value="{{row.id}}" selected>{{row.First_Name}}</option>  
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="name">Services:</label>
+                <select class="form-control" name="serviceID" [(ngModel)]="editData.serviceID" (change)="serviceChange($event.target.value)"   required>
+                  <option *ngFor="let row of employeeServices" value="{{row.id}}" selected> {{row.Service_Name}} 'Duration ' {{row.Duration}}</option>
+                  <option value="3">Custom</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="customService">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="name">Custom Servics Name:</label>
+                <input type="text" class="form-control" name="customServiceName" [(ngModel)]="editData.customServiceName" required>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="customService">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="name">Custom Servics Price:</label>
+                <input type="number" name="customServicePrice" class="form-control" required [(ngModel)]="editData.customServicePrice" >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="name">Date:</label>
+                <input type="date" class="form-control" name="date" required [(ngModel)]="editData.date" value="{{editData.data}}" >
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="name">Start From:</label>
+                <select disabled="{{!servicesDuration}}" class="form-control" name="servicesFrom" (change)="getEndTime($event.target.value)"  required [(ngModel)]="editData.servicesFrom">
+                  <option value="0" selected>--From --</option>
+                  <option value="1 am">1:00am</option>
+                  <option value="2 am">2:00am</option>
+                  <option value="3 am">3:00am</option>
+                  <option value="4 am">4:00am</option>
+                  <option value="5 am">5:00am</option>
+                  <option value="6 am">6:00am</option>
+                  <option value="7 am">7:00am</option>
+                  <option value="8 am">8:00am</option>
+                  <option value="9 am">9:00am</option>
+                  <option value="10 am">10:00am</option>
+                  <option value="11 am">11:00am</option>
+                  <option value="12 am">12:00am</option>
+                  <option value="1 pm">1:00pm</option>
+                  <option value="2 pm">2:00pm</option>
+                  <option value="3 pm">3:00pm</option>
+                  <option value="4 pm">4:00pm</option>
+                  <option value="5 pm">5:00pm</option>
+                  <option value="6 pm">6:00pm</option>
+                  <option value="7 pm">7:00pm</option>
+                  <option value="8 pm">8:00pm</option>
+                  <option value="9 pm">9:00pm</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="name">To:</label>
+                <input class="form-control" type="text" readonly name="serviceTo" required [(ngModel)]="editData.serviceTo">
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="fileDataLength > 0">
+            <div class="row" *ngFor="let row of fdList; let i = index">
+              <div class="col-md-6">
+                <a style="color: #0793E8">{{row.name}}</a>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <select class="form-control" name="userStatus" [(ngModel)]="editData.userStatus">
+                    <option data-icon="fa fa-clock-o" value="0">Panding</option>
+                    <option value="1" selected><i class="fa fa-check">Approved</i></option>
+                    <option value="2" ><i class="fa fa-times-circle" >Reject</i></option>
+                    <option value="2" ><i class="fa fa-times">Cancelled</i></option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-1">
+              <span class="text-danger pull-right" style="padding-top: 9px;">
+                <i class="fa fa-trash-o" (click)="removeRecord(row.name, i)"></i>
+              </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+               <!-- style="width: 114%; border-top-right-radius: 0px; border-bottom-right-radius: 0px" -->
+              <div class="form-group">
+                <label for="name">Customer:</label>
+                <select
+                        (change)="onChange($event.target.value)"
+                        class="form-control" name="customerID"
+                          required [(ngModel)]="editData.customerID"
+                       >
+                  <option *ngFor="let row of allCustomers" id="{{row.First_Name}}" value="{{row.id}}">{{row.First_Name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+               <!-- style="border-bottom-right-radius: 10px; border-top-right-radius: 10px;" -->
+              <!-- <div class="form-group">
+                <label for="name">New Customer:</label>
+                <button   class="form-control" (click)="newCustomerModal.show()"  class="btn btn-success btn-block">
+                  <i class="fa fa-plus-square-o"></i>{{"New Customer"|translate}}
+                </button>
+              </div> -->
+              <div class="form-group">
+                <label for="name">Status:</label>
+                <select  class="form-control" name="userStatus" [(ngModel)]="editData.userStatus">
+                  <option data-icon="fa fa-clock-o" value="0">Panding</option>
+                  <option value="1" selected>
+                    <i class="fa fa-check">Approved</i>
+                  </option>
+                  <option value="2">
+                    <i class="fa fa-times-circle">Reject</i>
+                  </option>
+                  <option value="2">
+                    <i class="fa fa-times">Cancelled</i>
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="name">Send notifications: <i class="fa fa-question-circle" aria-hidden="true"></i></label>
+                <select class="form-control" name="notification"  [(ngModel)]="editData.notification"  required>
+                  <option value="1">Yes</option>
+                  <option value="2">No</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="name">Internal note: </label>
+                <textarea class="form-control" style="width: 100%;" rows="3" name="internalNote" [(ngModel)]="editData.internalNote"></textarea>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="app-modal-footer">
+      <button type="button" class="btn btn-success" (click)="postAppiontment(); isSave? editModal.hide():'' ">Save</button>
+      <button type="button" class="btn btn-primary" (click)="editModal.hide();newFromHide()">Cancel</button>
+    </div>
+  </app-modal>
+
+</div>

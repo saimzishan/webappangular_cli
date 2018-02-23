@@ -1,0 +1,40 @@
+export class CompanyModel {
+    id: number = -1; 
+    Company_Name: string='';
+    URL: string='';
+    Address: string='';
+    ContactNumber: string='';
+    Company_Type:number;
+    SocialMediaLinks=[];
+    currentTabIndex = 0;
+    checkboxFalse = false;
+    Company_Admin_Email:string='';    
+    Admin_Password:string='';
+    User_Role:number=18;
+    confirmPassword:string='';
+    Company_Owner:number=0;
+    Branch_Admin_Email:string='';    
+    selected:string;
+    SubscriptionID:number;
+    Software_Services_Level:number=0;
+    Main_Branch:number=-1;
+    Max_Allowed_Branches:number=0;
+    Status:number;
+    Country:string='';
+    City:string='';
+    Town:string='';
+    Street:string='';
+    Building_No:number=0;
+    Mobile_No:string='';
+    Landline_No:string='';
+    Location:string='';
+    Contact_Person_Email:string='';
+    Social_Media_ID:number=0;
+    Contact_Person:string='';
+    Company_Color_Scheme:string='';
+    Company_Website:string='';
+    Logo: string='';
+    created_at: string='';
+    updated_at: string='';
+  }
+   

@@ -1,0 +1,101 @@
+<div class="content-wrapper">
+  <section class="content-header" style="margin-bottom: 30px;">
+    <h1>
+      <span class="heading-xs">{{"Appointments"|translate}}</span>
+      <div>
+        <button type="button"  class="btn btn-danger service-btn-del">
+          <i class="fa fa-trash"></i> {{"Delete"|translate}}</button>
+        <button type="button" class="add-button" >
+          <i class="fa fa-plus-square-o"></i> {{"New Appointment"|translate}}</button>
+      </div>
+    </h1>
+  </section>
+
+  <section class="content-header">
+    <div class="row">
+      <div class="col-md-1">
+        <input type="text" class="form-control" placeholder="No">
+      </div>
+      <div class="col-md-3">
+        <button type="button" class="btn btn-block btn-default" data-date="2018-01-01 - 2018-01-31">
+          <i class="dashicons dashicons-calendar-alt"></i>
+          <span>
+            January 1, 2018 - January 31, 2018
+          </span>
+        </button>
+      </div>
+      <div class="col-md-2"></div>
+      <div class="col-md-2"></div>
+      <div class="col-md-2"></div>
+      <div class="col-md-2"></div>
+    </div>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+
+        <div class="box">
+
+          <!-- <div class="box-header">
+              <h3 class="box-title">{{"All Departments"|translate}} </h3>
+          </div> -->
+
+          <!-- /.box-header -->
+          <div class="box-body">
+            <table id="tblDepartmentData" class="table table-bordered table-striped">
+              <thead style="background-color: #E7EAF0">
+              <tr>
+                <th>{{"No"|translate}}</th>
+                <th>{{"Appointmenat Date"|translate}}</th>
+                <th>{{"Employee"|translate}}</th>
+                <th>{{"Customer Name"|translate}}</th>
+                <th>{{"Customer Phone"|translate}}</th>
+                <th>{{"Customer Email"|translate}}</th>
+                <th>{{"Services"|translate}}</th>
+                <th>{{"Duration"|translate}}</th>
+                <th>{{"Status"|translate}}</th>
+                <th>{{"Payment"|translate}}</th>
+              </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let row of appiontments">
+                  <td>{{row.id}}</td>
+                  <td>{{row.Date}}</td>
+                  <td>{{row.employeeName}}</td>
+                  <td>{{row.customerName}}</td>
+                  <td>{{row.customerPhone}}</td>
+                  <td>{{row.customerEmail}}</td>
+                  <td>{{row.Service_Name}}</td>
+                  <td>{{row.Duration}}</td>
+                  <td>{{row.id}}</td>
+                  <td>{{row.status}}</td>
+                </tr>
+              </tbody>
+              <tfoot>
+              <tr>
+                <th>{{"No"|translate}}</th>
+                <th>{{"Appointmenat Date"|translate}}</th>
+                <th>{{"Employee"|translate}}</th>
+                <th>{{"Customer Name"|translate}}</th>
+                <th>{{"Customer Phone"|translate}}</th>
+                <th>{{"Customer Email"|translate}}</th>
+                <th>{{"Services"|translate}}</th>
+                <th>{{"Duration"|translate}}</th>
+                <th>{{"Status"|translate}}</th>
+                <th>{{"Payment"|translate}}</th>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+</div>

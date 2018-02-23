@@ -1,0 +1,17 @@
+<div class="box-body">
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="numb">{{"Role"|translate}}</label>
+                <label class="left-pad ">
+                    <p *ngIf="Name.invalid && (Name.dirty || Name.touched)" class="text-red">
+                        <span *ngIf="Name.errors.required">{{"Please enter role"|translate}}</span>
+                    </p>
+                </label>
+                <input type="text" name="Name" #Name="ngModel" [(ngModel)]="role.Name" class="form-control" placeholder="Enter role" required/>
+            </div>
+        </div>
+    </div>
+
+</div>
